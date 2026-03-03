@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Cod Store | Login</title>
+  <meta name="description" content="Login to The Cod Store account." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="login.css" />
+</head>
+<body>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <main class="login-page">
+    <section class="login-card" aria-labelledby="login-title">
+      <a class="brand" href="index.html">THE COD <span>STORE</span></a>
+      <h1 id="login-title">Sign in to your account</h1>
+      <p class="sub">Track your orders and checkout faster.</p>
+
+      <form id="login-form" novalidate>
+        <label>
+          Email
+          <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required />
+        </label>
+
+        <label>
+          Password
+          <div class="password-wrap">
+            <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" minlength="6" required />
+            <button id="toggle-password" type="button" class="toggle-btn" aria-label="Show password">Show</button>
+          </div>
+        </label>
+
+        <label class="check-row">
+          <input id="remember" name="remember" type="checkbox" />
+          Remember me
+        </label>
+
+        <button class="submit-btn" type="submit">Login</button>
+        <p id="message" class="message" aria-live="polite"></p>
+      </form>
+
+      <div class="actions">
+        <a href="index.html">Back to Store</a>
+        <a href="#" aria-disabled="true">Forgot password?</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="login.js"></script>
+</body>
+</html>

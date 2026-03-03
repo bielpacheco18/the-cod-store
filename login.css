@@ -1,0 +1,163 @@
+﻿:root {
+  --bg: #060b16;
+  --line: #28426e;
+  --text: #ebf4ff;
+  --muted: #9eb2d5;
+  --accent: #00d9ff;
+  --accent-2: #1bffb4;
+  --danger: #ff5d73;
+  --ok: #67ffae;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  color: var(--text);
+  background: radial-gradient(circle at 10% 10%, #143159 0%, var(--bg) 38%, #030711 100%);
+}
+
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image: linear-gradient(rgba(0, 217, 255, 0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 217, 255, 0.08) 1px, transparent 1px);
+  background-size: 26px 26px;
+  mask-image: radial-gradient(circle at center, black 30%, transparent 82%);
+}
+
+.login-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+.login-card {
+  width: min(460px, 100%);
+  border: 1px solid var(--line);
+  background: linear-gradient(160deg, rgba(16, 30, 56, 0.96), rgba(8, 14, 26, 0.96));
+  border-radius: 18px;
+  padding: 1.2rem;
+}
+
+.brand {
+  text-decoration: none;
+  color: var(--text);
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 800;
+}
+
+.brand span {
+  color: var(--accent);
+}
+
+h1 {
+  margin: 0.8rem 0 0.4rem;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.4rem;
+}
+
+.sub {
+  margin-top: 0;
+  color: var(--muted);
+}
+
+form {
+  display: grid;
+  gap: 0.72rem;
+}
+
+label {
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.92rem;
+}
+
+input {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: #101b33;
+  border-radius: 10px;
+  color: var(--text);
+  padding: 0.65rem 0.7rem;
+}
+
+.password-wrap {
+  position: relative;
+}
+
+.password-wrap input {
+  padding-right: 4rem;
+}
+
+.toggle-btn {
+  position: absolute;
+  right: 0.4rem;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #1b3259;
+  color: var(--text);
+  padding: 0.28rem 0.5rem;
+  cursor: pointer;
+}
+
+.check-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.check-row input {
+  width: 16px;
+  height: 16px;
+}
+
+.submit-btn {
+  border: 0;
+  border-radius: 12px;
+  padding: 0.72rem 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  color: #041423;
+  background: linear-gradient(125deg, var(--accent), #7de8ff);
+}
+
+.message {
+  min-height: 1.2em;
+  margin: 0;
+  color: var(--muted);
+}
+
+.message.error {
+  color: var(--danger);
+}
+
+.message.success {
+  color: var(--ok);
+}
+
+.actions {
+  margin-top: 0.8rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.actions a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.actions a:hover {
+  color: var(--text);
+}
