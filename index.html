@@ -1,290 +1,211 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Cod Store | Tactical Gaming Tech</title>
   <meta name="description" content="Tech-style store for Call of Duty, Marvel Rivals and Battlefield fans." />
+  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body { font-family: 'Space Grotesk', sans-serif; }
+    h1,h2,h3,.font-orbitron { font-family: 'Orbitron', sans-serif; }
+    .bg-grid {
+      position: fixed; inset: 0; z-index: -1;
+      background-image: linear-gradient(rgba(56,189,248,.1) 1px,transparent 1px),linear-gradient(90deg,rgba(56,189,248,.1) 1px,transparent 1px);
+      background-size: 26px 26px;
+      mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+    }
+    .filter.active { background: #22d3ee; color: #0b1220; border-color: transparent; }
+    .cart-drawer { transform: translateX(100%); transition: transform .22s ease; }
+    .cart-drawer.open { transform: translateX(0); }
+    .chat-widget { opacity: 0; transform: translateY(12px) scale(.98); pointer-events: none; transition: .2s ease; }
+    .chat-widget.open { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+    .chat-msg.user { margin-left: auto; background: #1e3a8a; border: 1px solid #3b82f6; color: #dbeafe; }
+    .chat-msg.bot { background: #0f172a; border: 1px solid #334155; color: #cbd5e1; }
+  </style>
 </head>
-<body>
+<body class="bg-slate-950 text-slate-100">
   <div class="bg-grid" aria-hidden="true"></div>
 
-  <header class="site-header">
-    <div class="container nav-wrap">
-      <a href="#top" class="logo">THE COD <span>STORE</span></a>
-      <nav class="main-nav" aria-label="Primary">
-        <a href="#featured">Featured</a>
-        <a href="#catalog">Catalog</a>
-        <a href="#shipping">Shipping</a>
-        <a href="booster.html">Join as Booster</a>
+  <header class="sticky top-0 z-50 border-b border-slate-700/60 bg-slate-950/70 backdrop-blur">
+    <div class="mx-auto flex min-h-[72px] w-[min(1140px,calc(100%-2rem))] items-center justify-between gap-4">
+      <a href="#top" class="font-orbitron text-sm font-extrabold tracking-wide md:text-base">THE COD <span class="text-cyan-400">STORE</span></a>
+      <nav class="hidden items-center gap-4 text-sm text-slate-300 md:flex" aria-label="Primary">
+        <a href="#featured" class="hover:text-white">Featured</a>
+        <a href="#catalog" class="hover:text-white">Catalog</a>
+        <a href="#shipping" class="hover:text-white">Shipping</a>
+        <a href="booster.html" class="hover:text-white">Join as Booster</a>
       </nav>
-      <div class="header-actions">
-        <a class="cart-btn link-btn" href="login.html">Login</a>
-        <button class="cart-btn" id="open-cart" type="button" aria-label="Open cart">
-          Cart <span id="cart-count">0</span>
-        </button>
+      <div class="flex items-center gap-2">
+        <a class="rounded-full border border-slate-600 bg-slate-900 px-3 py-2 text-xs font-bold text-slate-100" href="login.html">Login</a>
+        <button class="rounded-full border border-slate-600 bg-slate-900 px-3 py-2 text-xs font-bold text-slate-100" id="open-cart" type="button" aria-label="Open cart">Cart <span id="cart-count" class="text-cyan-300">0</span></button>
       </div>
     </div>
   </header>
 
   <main id="top">
-    <section class="hero">
-      <div class="container hero-grid">
+    <section class="py-16">
+      <div class="mx-auto grid w-[min(1140px,calc(100%-2rem))] gap-4 lg:grid-cols-[1.5fr,1fr]">
         <div>
-          <p class="badge">ENGLISH STORE | WORLDWIDE DELIVERY</p>
-          <h1>Premium Gaming Drops With a Tech-Core Identity</h1>
-          <p>
-            Apparel, desk gear and tactical accessories inspired by Call of Duty,
-            Marvel Rivals and Battlefield.
-          </p>
-          <div class="hero-actions">
-            <a class="btn primary" href="#catalog">Start Shopping</a>
-            <button class="btn ghost" id="open-cart-hero" type="button">Go to Checkout</button>
+          <p class="inline-flex rounded-full border border-slate-700 px-3 py-1 text-xs text-cyan-300">ENGLISH STORE | WORLDWIDE DELIVERY</p>
+          <h1 class="mt-4 max-w-3xl text-4xl font-extrabold leading-tight md:text-5xl">Premium Boosting Services for Competitive Players</h1>
+          <p class="mt-4 max-w-2xl text-slate-300">Pro boosting, unlock services and competitive packages for Call of Duty, Marvel Rivals and Battlefield.</p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a class="rounded-xl bg-cyan-400 px-4 py-3 text-sm font-bold text-slate-950" href="#catalog">Start Shopping</a>
+            <button class="rounded-xl border border-slate-600 px-4 py-3 text-sm font-bold" id="open-cart-hero" type="button">Go to Checkout</button>
           </div>
-          <div class="hero-stats">
-            <div><strong>72h</strong><span>Fast dispatch</span></div>
-            <div><strong>35+</strong><span>Countries served</span></div>
-            <div><strong>4.9/5</strong><span>Player rating</span></div>
+          <div class="mt-6 grid gap-3 sm:grid-cols-3">
+            <div class="rounded-xl border border-slate-700 bg-slate-900/60 p-3"><strong>72h</strong><p class="text-xs text-slate-400">Fast dispatch</p></div>
+            <div class="rounded-xl border border-slate-700 bg-slate-900/60 p-3"><strong>35+</strong><p class="text-xs text-slate-400">Countries served</p></div>
+            <div class="rounded-xl border border-slate-700 bg-slate-900/60 p-3"><strong>4.9/5</strong><p class="text-xs text-slate-400">Player rating</p></div>
           </div>
         </div>
-        <aside class="hero-panel">
-          <h2>Live Drop</h2>
-          <p>Codename collection active now:</p>
-          <ul>
+        <aside class="rounded-2xl border border-slate-700 bg-slate-900/70 p-4">
+          <h2 class="text-xl font-bold">Live Drop</h2>
+          <p class="mt-2 text-slate-300">Codename collection active now:</p>
+          <ul class="mt-2 list-disc space-y-1 pl-5 text-slate-400">
             <li>COD Stealth Ops Line</li>
             <li>Marvel Rivals Neon Heroes</li>
             <li>Battlefield Command Series</li>
           </ul>
-          <p class="panel-note">Limited inventory per region.</p>
+          <p class="mt-2 text-sm text-amber-300">Limited inventory per region.</p>
         </aside>
       </div>
     </section>
 
-    <section id="featured" class="section">
-      <div class="container">
-        <div class="section-head">
-          <h2>Featured Drops</h2>
-          <p>Best selling products this week.</p>
+    <section id="boost-config" class="bg-slate-900/50 py-10">
+      <div class="mx-auto w-[min(1140px,calc(100%-2rem))]">
+        <div class="mb-4 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+          <h2 class="text-2xl font-bold">Rank Boost Configurator</h2>
+          <p class="text-sm text-slate-300">Choose game, rank range and extras to see your estimated price instantly.</p>
         </div>
-        <div class="card-grid" id="featured-grid"></div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <article class="info-card coming-soon">
-          <h2>More Games Coming Soon</h2>
-          <p>New game collections are in development and will be added to The Cod Store soon.</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="catalog" class="section alt">
-      <div class="container">
-        <div class="section-head">
-          <h2>Catalog</h2>
-          <p>Filter by game, subcategory, search by product and sort by price.</p>
-        </div>
-
-        <div class="controls">
-          <div class="filters" id="filters" role="tablist" aria-label="Filter by game">
-            <button class="filter active" data-filter="all" type="button">All</button>
-            <button class="filter" data-filter="call-of-duty" type="button">Call of Duty</button>
-            <button class="filter" data-filter="marvel-rivals" type="button">Marvel Rivals</button>
-            <button class="filter" data-filter="battlefield" type="button">Battlefield</button>
-          </div>
-          <div class="subfilters-wrap">
-            <p class="subfilters-title">Subcategory</p>
-            <div class="filters subfilters" id="subfilters" role="tablist" aria-label="Filter by subcategory"></div>
-          </div>
-          <div class="search-sort">
-            <input id="search" type="search" placeholder="Search products..." aria-label="Search products" />
-            <select id="sort" aria-label="Sort products">
-              <option value="featured">Sort: Featured</option>
-              <option value="price-asc">Price: Low to High</option>
-              <option value="price-desc">Price: High to Low</option>
-              <option value="name-asc">Name: A-Z</option>
-            </select>
-          </div>
-        </div>
-
-        <p class="results" id="results-count">0 products</p>
-        <div class="card-grid" id="catalog-grid"></div>
-      </div>
-    </section>
-
-    <section id="shipping" class="section">
-      <div class="container shipping-wrap">
-        <article class="info-card">
-          <h2>Pro Boosting Services</h2>
-          <p>Get boosted by verified professionals. Climb ranks fast with our expert players. Safe and discreet.</p>
-        </article>
-        <article class="info-card">
-          <h2>Instant Delivery</h2>
-          <p>Digital codes delivered to your email within minutes. No waiting days for some seller to process your order.</p>
-        </article>
-        <article class="info-card">
-          <h2>100% Secure & Legit</h2>
-          <p>Encrypted payments via Stripe and PayPal. We're gamers too; we'd never risk our rep with sketchy codes.</p>
-        </article>
-        <article class="info-card">
-          <h2>24/7 Support</h2>
-          <p>Our support team is online day and night to help with orders, boosting updates and account questions.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <div class="section-head">
-          <h2>How It Works</h2>
-          <p>Simple and fast process to start your boost.</p>
-        </div>
-        <div class="steps-grid">
-          <article class="step-card">
-            <p class="step-kicker">STEP 1</p>
-            <h3>Browse Services</h3>
-            <p>Select your game and choose the rank boost package that fits your goals.</p>
+        <div class="grid gap-4 lg:grid-cols-[1.2fr,1fr]">
+          <article class="grid gap-3 rounded-2xl border border-slate-700 bg-slate-900/70 p-4">
+            <label class="text-sm">Game<select id="cfg-game" class="mt-1 w-full rounded-lg border border-slate-600 bg-slate-900 px-3 py-2"><option value="call-of-duty">Call of Duty</option><option value="marvel-rivals">Marvel Rivals</option><option value="battlefield">Battlefield</option></select></label>
+            <label class="text-sm">Current Rank<select id="cfg-current-rank" class="mt-1 w-full rounded-lg border border-slate-600 bg-slate-900 px-3 py-2"><option value="0">Bronze</option><option value="1">Silver</option><option value="2">Gold</option><option value="3">Platinum</option><option value="4">Diamond</option><option value="5">Master</option><option value="6">Grandmaster</option><option value="7">Top Rank</option></select></label>
+            <label class="text-sm">Desired Rank<select id="cfg-desired-rank" class="mt-1 w-full rounded-lg border border-slate-600 bg-slate-900 px-3 py-2"><option value="1">Silver</option><option value="2">Gold</option><option value="3">Platinum</option><option value="4">Diamond</option><option value="5">Master</option><option value="6">Grandmaster</option><option value="7">Top Rank</option></select></label>
+            <div class="space-y-2 rounded-xl border border-slate-700 bg-slate-950/60 p-3 text-sm">
+              <label class="flex items-center gap-2"><input type="checkbox" class="cfg-extra" data-multiplier="0.10" /> Request Specific Heroes (+10%)</label>
+              <label class="flex items-center gap-2"><input type="checkbox" class="cfg-extra" data-multiplier="0.25" /> XBOX/PSN (+25%)</label>
+              <label class="flex items-center gap-2"><input type="checkbox" class="cfg-extra" data-multiplier="0.30" /> Express Delivery (+30%)</label>
+              <label class="flex items-center gap-2"><input type="checkbox" class="cfg-extra" data-multiplier="1.00" /> Duo Queue (+100%)</label>
+              <label class="flex items-center gap-2"><input type="checkbox" class="cfg-extra" data-multiplier="0" /> Appear Offline (Free)</label>
+            </div>
           </article>
-          <article class="step-card">
-            <p class="step-kicker">STEP 2</p>
-            <h3>Complete Payment</h3>
-            <p>Secure checkout via Stripe or PayPal - your payment is protected.</p>
-          </article>
-          <article class="step-card">
-            <p class="step-kicker">STEP 3</p>
-            <h3>Join & Get Boosted</h3>
-            <p>Join our Discord and open a ticket. Our pro boosters will start working on your rank immediately.</p>
+          <article class="rounded-2xl border border-slate-700 bg-slate-900/70 p-4">
+            <p class="text-xs font-semibold uppercase tracking-wider text-cyan-300">Estimated Total</p>
+            <h3 id="cfg-total" class="mt-2 text-4xl font-extrabold">$0.00</h3>
+            <p id="cfg-note" class="mt-2 text-sm text-slate-300">Select your target rank to calculate.</p>
+            <div class="mt-4 flex flex-wrap gap-3">
+              <a class="rounded-xl bg-cyan-400 px-4 py-3 text-sm font-bold text-slate-950" href="#catalog">Buy Now</a>
+              <button class="rounded-xl border border-slate-600 px-4 py-3 text-sm font-bold" id="open-chat-config" type="button">Chat Before Purchase</button>
+            </div>
+            <div class="mt-4 grid gap-2 sm:grid-cols-2 text-xs text-slate-300">
+              <p class="rounded-lg border border-slate-700 p-2">No cheats or scripts</p>
+              <p class="rounded-lg border border-slate-700 p-2">Secure payments</p>
+              <p class="rounded-lg border border-slate-700 p-2">24/7 live support</p>
+              <p class="rounded-lg border border-slate-700 p-2">Progress updates</p>
+            </div>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="section alt">
-      <div class="container">
-        <div class="section-head">
-          <h2>Player Reviews</h2>
-          <div class="reviews-head">
-            <p>Trusted by competitive players and content creators.</p>
-            <div class="reviews-nav" aria-label="Review carousel controls">
-              <button id="reviews-prev" class="review-nav-btn" type="button" aria-label="Previous review">←</button>
-              <button id="reviews-next" class="review-nav-btn" type="button" aria-label="Next review">→</button>
+    <section id="featured" class="py-10">
+      <div class="mx-auto w-[min(1140px,calc(100%-2rem))]">
+        <div class="mb-4 flex flex-col gap-2 md:flex-row md:items-end md:justify-between"><h2 class="text-2xl font-bold">Featured Drops</h2><p class="text-sm text-slate-300">Best selling products this week.</p></div>
+        <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4" id="featured-grid"></div>
+      </div>
+    </section>
+
+    <section class="py-4"><div class="mx-auto w-[min(1140px,calc(100%-2rem))]"><article class="rounded-2xl border border-cyan-700/50 bg-slate-900/70 p-5 text-center"><h2 class="text-xl font-bold text-cyan-300">More Games Coming Soon</h2><p class="mt-2 text-slate-300">New game collections are in development and will be added to The Cod Store soon.</p></article></div></section>
+
+    <section id="catalog" class="bg-slate-900/50 py-10">
+      <div class="mx-auto w-[min(1140px,calc(100%-2rem))]">
+        <div class="mb-4 flex flex-col gap-2 md:flex-row md:items-end md:justify-between"><h2 class="text-2xl font-bold">Catalog</h2><p class="text-sm text-slate-300">Filter by game, subcategory, search by product and sort by price.</p></div>
+        <div class="mb-3 grid gap-3">
+          <div class="filters flex flex-wrap gap-2" id="filters" role="tablist" aria-label="Filter by game">
+            <button class="filter active rounded-full border border-slate-600 bg-slate-900 px-3 py-2 text-sm font-bold" data-filter="all" type="button">All</button>
+            <button class="filter rounded-full border border-slate-600 bg-slate-900 px-3 py-2 text-sm font-bold" data-filter="call-of-duty" type="button">Call of Duty</button>
+            <button class="filter rounded-full border border-slate-600 bg-slate-900 px-3 py-2 text-sm font-bold" data-filter="marvel-rivals" type="button">Marvel Rivals</button>
+            <button class="filter rounded-full border border-slate-600 bg-slate-900 px-3 py-2 text-sm font-bold" data-filter="battlefield" type="button">Battlefield</button>
+          </div>
+          <div class="subfilters-wrap grid gap-2">
+            <p class="text-xs text-slate-400">Subcategory</p>
+            <div class="filters subfilters flex flex-wrap gap-2" id="subfilters" role="tablist" aria-label="Filter by subcategory"></div>
+          </div>
+          <div class="grid gap-2 md:grid-cols-[2fr,1fr]"><input id="search" type="search" placeholder="Search products..." class="rounded-lg border border-slate-600 bg-slate-900 px-3 py-2" /><select id="sort" class="rounded-lg border border-slate-600 bg-slate-900 px-3 py-2"><option value="featured">Sort: Featured</option><option value="price-asc">Price: Low to High</option><option value="price-desc">Price: High to Low</option><option value="name-asc">Name: A-Z</option></select></div>
+        </div>
+        <p class="mb-3 text-sm text-slate-300" id="results-count">0 products</p>
+        <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4" id="catalog-grid"></div>
+      </div>
+    </section>
+
+    <section id="shipping" class="py-10"><div class="mx-auto grid w-[min(1140px,calc(100%-2rem))] gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <article class="rounded-2xl border border-slate-700 bg-slate-900/70 p-4"><h2 class="text-lg font-bold">Pro Boosting Services</h2><p class="mt-2 text-slate-300">Get boosted by verified professionals. Climb ranks fast with our expert players. Safe and discreet.</p></article>
+      <article class="rounded-2xl border border-slate-700 bg-slate-900/70 p-4"><h2 class="text-lg font-bold">Instant Delivery</h2><p class="mt-2 text-slate-300">Digital codes delivered to your email within minutes. No waiting days for some seller to process your order.</p></article>
+      <article class="rounded-2xl border border-slate-700 bg-slate-900/70 p-4"><h2 class="text-lg font-bold">100% Secure & Legit</h2><p class="mt-2 text-slate-300">Encrypted payments via Stripe and PayPal. We never risk our reputation with unsafe methods.</p></article>
+      <article class="rounded-2xl border border-slate-700 bg-slate-900/70 p-4"><h2 class="text-lg font-bold">24/7 Support</h2><p class="mt-2 text-slate-300">Our support team is online day and night to help with orders, boosting updates and account questions.</p></article>
+    </div></section>
+
+    <section class="py-10"><div class="mx-auto w-[min(1140px,calc(100%-2rem))]"><div class="mb-4 flex flex-col gap-2 md:flex-row md:items-end md:justify-between"><h2 class="text-2xl font-bold">How It Works</h2><p class="text-sm text-slate-300">Simple and fast process to start your boost.</p></div><div class="grid gap-4 md:grid-cols-3"><article class="rounded-2xl border border-slate-700 bg-slate-900/70 p-4"><p class="text-xs font-bold text-cyan-300">STEP 1</p><h3 class="mt-1 text-lg font-bold">Browse Services</h3><p class="mt-2 text-slate-300">Select your game and choose the rank boost package that fits your goals.</p></article><article class="rounded-2xl border border-slate-700 bg-slate-900/70 p-4"><p class="text-xs font-bold text-cyan-300">STEP 2</p><h3 class="mt-1 text-lg font-bold">Complete Payment</h3><p class="mt-2 text-slate-300">Secure checkout via Stripe or PayPal - your payment is protected.</p></article><article class="rounded-2xl border border-slate-700 bg-slate-900/70 p-4"><p class="text-xs font-bold text-cyan-300">STEP 3</p><h3 class="mt-1 text-lg font-bold">Join & Get Boosted</h3><p class="mt-2 text-slate-300">Join our Discord and open a ticket. Our pro boosters start on your rank immediately.</p></article></div></div></section>
+
+    <section class="bg-slate-900/50 py-10">
+      <div class="mx-auto w-[min(1140px,calc(100%-2rem))]">
+        <div class="mb-4 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+          <h2 class="text-2xl font-bold">Player Reviews</h2>
+          <div class="reviews-head flex items-center gap-2">
+            <p class="text-sm text-slate-300">Trusted by competitive players and content creators.</p>
+            <div class="reviews-nav flex gap-2" aria-label="Review carousel controls">
+              <button id="reviews-prev" class="review-nav-btn rounded-lg border border-slate-600 bg-slate-900 px-3 py-2" type="button" aria-label="Previous review">?</button>
+              <button id="reviews-next" class="review-nav-btn rounded-lg border border-slate-600 bg-slate-900 px-3 py-2" type="button" aria-label="Next review">?</button>
             </div>
           </div>
         </div>
-        <div id="reviews-track" class="reviews-track" aria-label="Customer testimonials">
-          <article class="review-card">
-            <div class="review-top">
-              <div class="avatar">EM</div>
-              <div>
-                <h3>Ethan Miller</h3>
-                <p class="review-source">@ethanm | COD Ranked</p>
-              </div>
-              <p class="review-stars">★★★★★</p>
-            </div>
-            <p class="review-quote">“Reached Crimson faster than expected. Service was discreet and communication on Discord was 10/10.”</p>
-          </article>
+        <div id="reviews-track" class="reviews-track grid auto-cols-[minmax(280px,1fr)] grid-flow-col gap-4 overflow-x-auto" aria-label="Customer testimonials">
+          <article class="review-card rounded-2xl border border-slate-700 bg-slate-900/70 p-4"><div class="review-top flex items-center gap-3"><div class="avatar grid h-10 w-10 place-items-center rounded-full bg-cyan-300 text-xs font-bold text-slate-900">EM</div><div><h3 class="text-sm font-bold">Ethan Miller</h3><p class="review-source text-xs text-cyan-300">@ethanm | COD Ranked</p></div><p class="review-stars ml-auto text-sm text-amber-300">?????</p></div><p class="review-quote mt-3 text-slate-300">Reached Crimson faster than expected. Service was discreet and communication on Discord was 10/10.</p></article>
+          <article class="review-card rounded-2xl border border-slate-700 bg-slate-900/70 p-4"><div class="review-top flex items-center gap-3"><div class="avatar grid h-10 w-10 place-items-center rounded-full bg-cyan-300 text-xs font-bold text-slate-900">OR</div><div><h3 class="text-sm font-bold">Olivia Reed</h3><p class="review-source text-xs text-cyan-300">@livplays | Marvel Rivals</p></div><p class="review-stars ml-auto text-sm text-amber-300">?????</p></div><p class="review-quote mt-3 text-slate-300">Bought a boost + instant code combo and both were delivered exactly on time. Legit team.</p></article>
+          <article class="review-card rounded-2xl border border-slate-700 bg-slate-900/70 p-4"><div class="review-top flex items-center gap-3"><div class="avatar grid h-10 w-10 place-items-center rounded-full bg-cyan-300 text-xs font-bold text-slate-900">NT</div><div><h3 class="text-sm font-bold">Noah Turner</h3><p class="review-source text-xs text-cyan-300">@noaht | Battlefield</p></div><p class="review-stars ml-auto text-sm text-amber-300">?????</p></div><p class="review-quote mt-3 text-slate-300">Clear process, safe account handling and fast support. I already booked my next rank package.</p></article>
+          <article class="review-card rounded-2xl border border-slate-700 bg-slate-900/70 p-4"><div class="review-top flex items-center gap-3"><div class="avatar grid h-10 w-10 place-items-center rounded-full bg-cyan-300 text-xs font-bold text-slate-900">SK</div><div><h3 class="text-sm font-bold">Sophia King</h3><p class="review-source text-xs text-cyan-300">@sking | Warzone</p></div><p class="review-stars ml-auto text-sm text-amber-300">?????</p></div><p class="review-quote mt-3 text-slate-300">Very professional boosters. No stress, no weird behavior, and my rank goals were fully completed.</p></article>
+        </div>
+      </div>
+    </section>
 
-          <article class="review-card">
-            <div class="review-top">
-              <div class="avatar">OR</div>
-              <div>
-                <h3>Olivia Reed</h3>
-                <p class="review-source">@livplays | Marvel Rivals</p>
-              </div>
-              <p class="review-stars">★★★★★</p>
-            </div>
-            <p class="review-quote">“Bought a boost + instant code combo and both were delivered exactly on time. Legit team.”</p>
-          </article>
-
-          <article class="review-card">
-            <div class="review-top">
-              <div class="avatar">NT</div>
-              <div>
-                <h3>Noah Turner</h3>
-                <p class="review-source">@noaht | Battlefield</p>
-              </div>
-              <p class="review-stars">★★★★☆</p>
-            </div>
-            <p class="review-quote">“Clear process, safe account handling and fast support. I already booked my next rank package.”</p>
-          </article>
-
-          <article class="review-card">
-            <div class="review-top">
-              <div class="avatar">SK</div>
-              <div>
-                <h3>Sophia King</h3>
-                <p class="review-source">@sking | Warzone</p>
-              </div>
-              <p class="review-stars">★★★★★</p>
-            </div>
-            <p class="review-quote">“Very professional boosters. No stress, no weird behavior, and my rank goals were fully completed.”</p>
-          </article>
+    <section id="faq" class="py-10">
+      <div class="mx-auto w-[min(1140px,calc(100%-2rem))]">
+        <div class="mb-4 flex flex-col gap-2 md:flex-row md:items-end md:justify-between"><h2 class="text-2xl font-bold">FAQ</h2><p class="text-sm text-slate-300">Everything players ask before purchasing.</p></div>
+        <div class="faq-list grid gap-3">
+          <details class="rounded-xl border border-slate-700 bg-slate-900/70 p-3"><summary class="cursor-pointer font-bold">Is boosting safe?</summary><p class="mt-2 text-slate-300">Orders are handled by verified boosters with account safety guidelines and no cheat software.</p></details>
+          <details class="rounded-xl border border-slate-700 bg-slate-900/70 p-3"><summary class="cursor-pointer font-bold">How fast do you start?</summary><p class="mt-2 text-slate-300">Most orders start shortly after payment confirmation, depending on queue and selected extras.</p></details>
+          <details class="rounded-xl border border-slate-700 bg-slate-900/70 p-3"><summary class="cursor-pointer font-bold">Can I track progress?</summary><p class="mt-2 text-slate-300">Yes. You receive updates through live chat and Discord ticket communication.</p></details>
+          <details class="rounded-xl border border-slate-700 bg-slate-900/70 p-3"><summary class="cursor-pointer font-bold">Do you support PC and console?</summary><p class="mt-2 text-slate-300">We support PC and selected console orders. Use the platform extras in the configurator when needed.</p></details>
         </div>
       </div>
     </section>
   </main>
 
-  <aside class="cart-drawer" id="cart-drawer" aria-hidden="true">
-    <div class="cart-head">
-      <h2>Your Cart</h2>
-      <button id="close-cart" class="icon-btn" type="button" aria-label="Close cart">X</button>
-    </div>
-
-    <div id="cart-items" class="cart-items"></div>
-
-    <div class="cart-summary">
-      <div><span>Subtotal</span><strong id="subtotal">$0.00</strong></div>
-      <div><span>Shipping</span><strong id="shipping-cost">$0.00</strong></div>
-      <div><span>Tax (8%)</span><strong id="tax">$0.00</strong></div>
-      <div class="total"><span>Total</span><strong id="total">$0.00</strong></div>
-    </div>
-
-    <form id="checkout-form" class="checkout-form">
-      <h3>Checkout</h3>
-      <label>
-        Full Name
-        <input id="customer-name" name="name" required />
-      </label>
-      <label>
-        Email
-        <input id="customer-email" name="email" type="email" required />
-      </label>
-      <label>
-        Country
-        <input id="customer-country" name="country" required />
-      </label>
-      <button type="submit" class="btn primary full">Place Order</button>
-      <p id="checkout-message" class="checkout-message" aria-live="polite"></p>
-    </form>
+  <aside class="cart-drawer fixed right-0 top-0 z-[120] grid h-screen w-full max-w-md grid-rows-[auto,1fr,auto,auto] border-l border-slate-700 bg-slate-950" id="cart-drawer" aria-hidden="true">
+    <div class="flex items-center justify-between border-b border-slate-700 p-4"><h2 class="text-xl font-bold">Your Cart</h2><button id="close-cart" class="rounded-lg border border-slate-600 bg-slate-900 px-3 py-2" type="button">X</button></div>
+    <div id="cart-items" class="grid gap-3 overflow-auto p-4"></div>
+    <div class="grid gap-2 border-y border-slate-700 p-4 text-sm"><div class="flex justify-between"><span>Subtotal</span><strong id="subtotal">$0.00</strong></div><div class="flex justify-between"><span>Shipping</span><strong id="shipping-cost">$0.00</strong></div><div class="flex justify-between"><span>Tax (8%)</span><strong id="tax">$0.00</strong></div><div class="flex justify-between text-base"><span>Total</span><strong id="total" class="text-cyan-300">$0.00</strong></div></div>
+    <form id="checkout-form" class="grid gap-3 p-4"><h3 class="text-lg font-bold">Checkout</h3><label class="grid gap-1 text-sm">Full Name<input id="customer-name" name="name" class="rounded-lg border border-slate-600 bg-slate-900 px-3 py-2" required /></label><label class="grid gap-1 text-sm">Email<input id="customer-email" name="email" type="email" class="rounded-lg border border-slate-600 bg-slate-900 px-3 py-2" required /></label><label class="grid gap-1 text-sm">Country<input id="customer-country" name="country" class="rounded-lg border border-slate-600 bg-slate-900 px-3 py-2" required /></label><button type="submit" class="rounded-xl bg-cyan-400 px-4 py-3 font-bold text-slate-950">Place Order</button><p id="checkout-message" class="text-sm text-amber-300"></p></form>
   </aside>
 
-  <div id="overlay" class="overlay" hidden></div>
+  <div id="overlay" class="fixed inset-0 z-[100] bg-black/50" hidden></div>
+  <button id="chat-toggle" class="fixed bottom-4 right-4 z-[130] rounded-full bg-cyan-400 px-4 py-3 text-sm font-bold text-slate-950">Live Chat</button>
 
-  <button id="chat-toggle" class="chat-toggle" type="button" aria-label="Open live chat">Live Chat</button>
-
-  <section id="chat-widget" class="chat-widget" aria-hidden="true">
-    <header class="chat-head">
-      <div>
-        <h3>24/7 Support</h3>
-        <p>Average reply: under 1 min</p>
-      </div>
-      <button id="chat-close" class="icon-btn" type="button" aria-label="Close live chat">X</button>
-    </header>
-    <div id="chat-messages" class="chat-messages" aria-live="polite"></div>
-    <form id="chat-form" class="chat-form">
-      <input id="chat-input" type="text" placeholder="Type your message..." maxlength="280" required />
-      <button type="submit" class="btn primary">Send</button>
-    </form>
+  <section id="chat-widget" class="chat-widget fixed bottom-20 right-4 z-[130] grid h-[460px] w-[min(360px,calc(100%-1rem))] grid-rows-[auto,1fr,auto] overflow-hidden rounded-2xl border border-slate-700 bg-slate-900">
+    <header class="flex items-center justify-between gap-3 border-b border-slate-700 p-3"><div><h3 class="text-sm font-bold">24/7 Support</h3><p class="text-xs text-slate-400">Average reply: under 1 min</p></div><button id="chat-close" class="rounded-lg border border-slate-600 bg-slate-900 px-3 py-2" type="button">X</button></header>
+    <div id="chat-messages" class="grid content-start gap-2 overflow-auto p-3"></div>
+    <form id="chat-form" class="grid grid-cols-[1fr,auto] gap-2 border-t border-slate-700 p-3"><input id="chat-input" type="text" placeholder="Type your message..." maxlength="280" class="rounded-lg border border-slate-600 bg-slate-900 px-3 py-2" required /><button type="submit" class="rounded-lg bg-cyan-400 px-4 py-2 text-sm font-bold text-slate-950">Send</button></form>
   </section>
 
-  <footer class="site-footer">
-    <div class="container footer-wrap">
-      <p>© 2026 The Cod Store</p>
+  <footer class="border-t border-slate-700 bg-slate-950/70 py-5">
+    <div class="mx-auto flex w-[min(1140px,calc(100%-2rem))] flex-col items-center justify-between gap-2 text-sm text-slate-400 md:flex-row">
+      <p>� 2026 The Cod Store</p>
       <p>Support: support@thecodstore.gg</p>
     </div>
   </footer>

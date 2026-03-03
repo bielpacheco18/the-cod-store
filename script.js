@@ -39,6 +39,13 @@ const resultsCount = document.getElementById('results-count');
 const reviewsTrack = document.getElementById('reviews-track');
 const reviewsPrev = document.getElementById('reviews-prev');
 const reviewsNext = document.getElementById('reviews-next');
+const cfgGame = document.getElementById('cfg-game');
+const cfgCurrentRank = document.getElementById('cfg-current-rank');
+const cfgDesiredRank = document.getElementById('cfg-desired-rank');
+const cfgTotal = document.getElementById('cfg-total');
+const cfgNote = document.getElementById('cfg-note');
+const cfgExtras = document.querySelectorAll('.cfg-extra');
+const openChatConfig = document.getElementById('open-chat-config');
 
 const cartDrawer = document.getElementById('cart-drawer');
 const openCartBtn = document.getElementById('open-cart');
@@ -107,24 +114,24 @@ function renderSubfilters() {
 
 function cardTemplate(product) {
   return `
-    <article class="product-card">
-      <div class="thumb" style="--hue:${product.hue};">
+    <article class="overflow-hidden rounded-2xl border border-slate-700 bg-slate-900/70">
+      <div class="relative h-40 overflow-hidden bg-slate-900">
         <img src="${product.image || gameImages[product.game]}" alt="${product.title}" loading="lazy" onerror="this.onerror=null;this.src='${gameImages[product.game]}'" />
-        <div class="thumb-overlay">
-          <strong>${gameLabel(product.game)}</strong>
-          <span>${product.code}</span>
+        <div class="absolute inset-x-0 bottom-0 flex items-end justify-between bg-gradient-to-t from-slate-950 to-transparent p-3">
+          <strong class="text-xs tracking-wide text-slate-200">${gameLabel(product.game)}</strong>
+          <span class="font-orbitron text-2xl font-extrabold text-slate-100">${product.code}</span>
         </div>
       </div>
-      <div class="card-body">
-        <div class="tags-row">
-          <span class="tag">${gameLabel(product.game)}</span>
-          <span class="tag subtag">${subcategoryLabel(product.subcategory)}</span>
+      <div class="grid gap-2 p-3">
+        <div class="flex flex-wrap gap-2">
+          <span class="rounded-full border border-slate-600 px-2 py-1 text-[11px] text-cyan-300">${gameLabel(product.game)}</span>
+          <span class="rounded-full border border-slate-600 px-2 py-1 text-[11px] text-amber-300">${subcategoryLabel(product.subcategory)}</span>
         </div>
-        <h3 class="card-title">${product.title}</h3>
-        <p class="desc">${product.description}</p>
-        <div class="price-row">
-          <span class="price">${formatPrice(product.price)}</span>
-          <button class="add-btn" data-id="${product.id}" type="button">Add</button>
+        <h3 class="min-h-[2.4em] text-base font-bold">${product.title}</h3>
+        <p class="min-h-[2.5em] text-sm text-slate-300">${product.description}</p>
+        <div class="mt-1 flex items-center justify-between">
+          <span class="text-base font-bold text-emerald-300">${formatPrice(product.price)}</span>
+          <button class="add-btn rounded-lg bg-slate-800 px-3 py-2 text-sm font-bold hover:bg-slate-700" data-id="${product.id}" type="button">Add</button>
         </div>
       </div>
     </article>
@@ -169,7 +176,7 @@ function renderCatalog() {
   resultsCount.textContent = `${filtered.length} product${filtered.length === 1 ? '' : 's'}`;
   catalogGrid.innerHTML = filtered.length
     ? filtered.map(cardTemplate).join('')
-    : '<p class="empty-cart">No products found for your filters.</p>';
+    : '<p class="rounded-xl border border-dashed border-slate-600 p-4 text-center text-slate-300">No products found for your filters.</p>';
 }
 
 function saveCart() {
@@ -243,21 +250,21 @@ function renderCart() {
   cartCount.textContent = String(items.reduce((acc, item) => acc + item.qty, 0));
 
   if (!items.length) {
-    cartItems.innerHTML = '<p class="empty-cart">Your cart is empty. Add items from catalog.</p>';
+    cartItems.innerHTML = '<p class="rounded-xl border border-dashed border-slate-600 p-4 text-center text-slate-300">Your cart is empty. Add items from catalog.</p>';
   } else {
     cartItems.innerHTML = items.map((item) => `
-      <article class="cart-item">
-        <h4>${item.product.title}</h4>
-        <p>${gameLabel(item.product.game)} | ${formatPrice(item.product.price)} each</p>
-        <div class="item-row">
-          <div class="qty-controls">
-            <button class="qty-btn" data-action="decrease" data-id="${item.id}" type="button">-</button>
-            <span>${item.qty}</span>
-            <button class="qty-btn" data-action="increase" data-id="${item.id}" type="button">+</button>
+      <article class="rounded-xl border border-slate-700 bg-slate-900/70 p-3">
+        <h4 class="text-sm font-bold">${item.product.title}</h4>
+        <p class="mt-1 text-xs text-slate-300">${gameLabel(item.product.game)} | ${formatPrice(item.product.price)} each</p>
+        <div class="mt-2 flex items-center justify-between gap-2">
+          <div class="flex items-center gap-1">
+            <button class="qty-btn h-7 w-7 rounded-md border border-slate-600 bg-slate-800" data-action="decrease" data-id="${item.id}" type="button">-</button>
+            <span class="px-2 text-sm">${item.qty}</span>
+            <button class="qty-btn h-7 w-7 rounded-md border border-slate-600 bg-slate-800" data-action="increase" data-id="${item.id}" type="button">+</button>
           </div>
-          <strong>${formatPrice(item.lineTotal)}</strong>
+          <strong class="text-emerald-300">${formatPrice(item.lineTotal)}</strong>
         </div>
-        <button class="remove-btn" data-action="remove" data-id="${item.id}" type="button">Remove</button>
+        <button class="remove-btn mt-2 text-xs font-bold text-rose-400" data-action="remove" data-id="${item.id}" type="button">Remove</button>
       </article>
     `).join('');
   }
@@ -484,6 +491,53 @@ function initChat() {
   });
 }
 
+function initBoostConfigurator() {
+  if (!cfgGame || !cfgCurrentRank || !cfgDesiredRank || !cfgTotal || !cfgNote) return;
+
+  const baseByGame = {
+    'call-of-duty': 60,
+    'marvel-rivals': 55,
+    battlefield: 50
+  };
+
+  function calculate() {
+    const game = cfgGame.value;
+    const current = Number(cfgCurrentRank.value);
+    const desired = Number(cfgDesiredRank.value);
+
+    if (desired <= current) {
+      cfgTotal.textContent = '$0.00';
+      cfgNote.textContent = 'Desired rank must be higher than current rank.';
+      return;
+    }
+
+    let base = baseByGame[game] + (desired - current) * 45;
+    let multiplier = 1;
+    cfgExtras.forEach((extra) => {
+      if (extra.checked) multiplier += Number(extra.dataset.multiplier || 0);
+    });
+
+    const total = base * multiplier;
+    cfgTotal.textContent = formatPrice(total);
+    cfgNote.textContent = `${gameLabel(game)} | ${desired - current} rank steps | Includes selected extras`;
+  }
+
+  cfgGame.addEventListener('change', calculate);
+  cfgCurrentRank.addEventListener('change', calculate);
+  cfgDesiredRank.addEventListener('change', calculate);
+  cfgExtras.forEach((extra) => extra.addEventListener('change', calculate));
+
+  if (openChatConfig) {
+    openChatConfig.addEventListener('click', () => {
+      chatWidget?.classList.add('open');
+      chatWidget?.setAttribute('aria-hidden', 'false');
+      chatInput?.focus();
+    });
+  }
+
+  calculate();
+}
+
 filters.addEventListener('click', (event) => {
   const button = event.target.closest('.filter');
   if (!button) return;
@@ -540,3 +594,4 @@ renderCatalog();
 renderCart();
 initReviewsCarousel();
 initChat();
+initBoostConfigurator();
