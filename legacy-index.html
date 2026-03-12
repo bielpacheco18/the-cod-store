@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Cod Store | Tactical Gaming Tech</title>
+  <meta name="description" content="Tech-style store for Call of Duty, Marvel Rivals and Battlefield fans." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-0: #040812;
+      --bg-1: #0b1326;
+      --bg-2: #132445;
+      --line: rgba(123, 150, 196, 0.34);
+      --line-strong: rgba(143, 176, 233, 0.62);
+      --card: rgba(8, 14, 28, 0.78);
+      --text: #e6efff;
+      --muted: #95a4c3;
+      --accent: #57e3ff;
+      --accent-2: #6af7c4;
+      --danger: #fb7185;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(900px 500px at -10% -5%, rgba(87, 227, 255, 0.2), transparent 55%),
+        radial-gradient(800px 420px at 110% 0%, rgba(106, 247, 196, 0.14), transparent 52%),
+        linear-gradient(180deg, var(--bg-2), var(--bg-1) 38%, var(--bg-0));
+    }
+
+    h1, h2, h3, .font-oxanium { font-family: 'Oxanium', sans-serif; }
+
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      opacity: 0.36;
+      background-image:
+        linear-gradient(rgba(118, 152, 214, 0.14) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(118, 152, 214, 0.14) 1px, transparent 1px);
+      background-size: 30px 30px;
+      mask-image: radial-gradient(circle at center, black 34%, transparent 82%);
+    }
+
+    .top-glow {
+      position: fixed;
+      inset: -30% -20% auto -20%;
+      height: 440px;
+      z-index: -1;
+      pointer-events: none;
+      background: radial-gradient(circle at 50% 20%, rgba(87, 227, 255, 0.22), transparent 62%);
+      filter: blur(20px);
+    }
+
+    .site-card {
+      background: linear-gradient(165deg, rgba(14, 23, 44, 0.84), rgba(8, 14, 28, 0.92));
+      border: 1px solid var(--line);
+      box-shadow: 0 16px 42px rgba(2, 7, 18, 0.46);
+      backdrop-filter: blur(10px);
+    }
+
+    .glass-btn {
+      border: 1px solid var(--line);
+      background: rgba(8, 14, 28, 0.72);
+    }
+
+    .accent-btn {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #031322;
+      border: 0;
+      font-weight: 800;
+      box-shadow: 0 10px 30px rgba(87, 227, 255, 0.25);
+    }
+
+    .filter {
+      border: 1px solid var(--line);
+      background: rgba(8, 14, 28, 0.72);
+      transition: 0.18s ease;
+    }
+
+    .filter.active {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #031322;
+      border-color: transparent;
+      font-weight: 700;
+    }
+
+    input, select, textarea {
+      border-color: var(--line) !important;
+      background: rgba(7, 13, 27, 0.9) !important;
+      color: var(--text);
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: 0;
+      border-color: var(--line-strong) !important;
+      box-shadow: 0 0 0 3px rgba(87, 227, 255, 0.14);
+    }
+
+    .reviews-track {
+      scroll-snap-type: x mandatory;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(122, 155, 211, 0.5) transparent;
+    }
+
+    .review-card { scroll-snap-align: start; }
+
+    .cart-drawer { transform: translateX(100%); transition: transform .24s ease; }
+    .cart-drawer.open { transform: translateX(0); }
+
+    .chat-widget { opacity: 0; transform: translateY(14px) scale(.98); pointer-events: none; transition: .2s ease; }
+    .chat-widget.open { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+
+    .chat-msg {
+      border-radius: 12px;
+      max-width: 85%;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      font-size: 0.92rem;
+    }
+
+    .chat-msg.user {
+      margin-left: auto;
+      background: linear-gradient(145deg, rgba(39, 80, 174, 0.76), rgba(30, 65, 151, 0.88));
+      color: #dce8ff;
+    }
+
+    .chat-msg.bot {
+      background: rgba(10, 18, 34, 0.88);
+      color: #d5dff2;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="top-glow" aria-hidden="true"></div>
+
+  <div class="border-b border-slate-700/50 bg-slate-900/70">
+    <div class="mx-auto flex w-[min(1200px,calc(100%-2rem))] flex-wrap items-center justify-between gap-2 py-2 text-xs text-slate-300">
+      <p class="tracking-wide">THE ULTIMATE GAMING SERVICES PLATFORM</p>
+      <p class="text-cyan-300">20,000+ verified reviews | 100,000+ registered users</p>
+    </div>
+  </div>
+
+  <header class="sticky top-0 z-50 border-b border-slate-700/60 bg-slate-950/76 backdrop-blur">
+    <div class="mx-auto flex min-h-[76px] w-[min(1200px,calc(100%-2rem))] items-center justify-between gap-4">
+      <a href="#top" class="font-oxanium text-lg font-extrabold tracking-widest">THE COD <span class="text-cyan-300">STORE</span></a>
+      <nav class="hidden items-center gap-5 text-sm text-slate-300 lg:flex" aria-label="Primary">
+        <a href="#featured" class="hover:text-white">Featured</a>
+        <a href="#catalog" class="hover:text-white">Catalog</a>
+        <a href="#process" class="hover:text-white">How It Works</a>
+        <a href="my-orders.html" class="hover:text-white">My Orders</a>
+        <a href="booster.html" class="hover:text-white">Work With Us</a>
+      </nav>
+      <div class="flex items-center gap-2">
+        <a class="glass-btn rounded-full px-3 py-2 text-xs font-bold" href="login.html">Login</a>
+        <button class="accent-btn rounded-full px-4 py-2 text-xs" id="open-cart" type="button" aria-label="Open cart">Cart <span id="cart-count">0</span></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top" class="pb-12">
+    <section class="py-12 md:py-16">
+      <div class="mx-auto grid w-[min(1200px,calc(100%-2rem))] gap-5 lg:grid-cols-[1.2fr,0.8fr]">
+        <article class="site-card rounded-3xl p-6 md:p-8">
+          <p class="inline-flex rounded-full border border-cyan-300/40 bg-cyan-300/10 px-3 py-1 text-xs font-semibold tracking-wide text-cyan-200">WORLDWIDE DELIVERY | SECURE CHECKOUT</p>
+          <h1 class="mt-4 max-w-3xl text-4xl font-extrabold leading-tight md:text-5xl">World's Leading Marketplace for Gaming Currencies, Items and Accounts</h1>
+          <p class="mt-4 max-w-2xl text-slate-300">Tired of the grind? Get boosted by verified professionals with fast, secure and transparent order tracking.</p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a class="accent-btn rounded-xl px-5 py-3 text-sm" href="#catalog">Browse Catalog</a>
+            <button class="glass-btn rounded-xl px-5 py-3 text-sm font-bold" id="open-cart-hero" type="button">Checkout Now</button>
+          </div>
+          <div class="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+            <p class="rounded-xl border border-slate-700/70 bg-slate-950/60 p-3 text-sm">100% Secure Payment Processing</p>
+            <p class="rounded-xl border border-slate-700/70 bg-slate-950/60 p-3 text-sm">24/7 Customer Support</p>
+            <p class="rounded-xl border border-slate-700/70 bg-slate-950/60 p-3 text-sm">Enterprise-Grade Security</p>
+            <p class="rounded-xl border border-slate-700/70 bg-slate-950/60 p-3 text-sm">Lightning-Fast Fulfillment</p>
+          </div>
+        </article>
+
+        <aside class="site-card rounded-3xl p-5">
+          <h2 class="text-2xl font-bold">Browse Games</h2>
+          <p class="mt-1 text-sm text-slate-300">Pick your game and jump into curated services.</p>
+          <div class="mt-4 grid grid-cols-2 gap-3 text-sm">
+            <a href="#catalog" class="rounded-xl border border-slate-700 bg-slate-950/60 px-3 py-3 font-semibold hover:border-cyan-300/50">Call of Duty</a>
+            <a href="#catalog" class="rounded-xl border border-slate-700 bg-slate-950/60 px-3 py-3 font-semibold hover:border-cyan-300/50">Marvel Rivals</a>
+            <a href="#catalog" class="rounded-xl border border-slate-700 bg-slate-950/60 px-3 py-3 font-semibold hover:border-cyan-300/50">Battlefield</a>
+            <a href="#catalog" class="rounded-xl border border-slate-700 bg-slate-950/60 px-3 py-3 font-semibold hover:border-cyan-300/50">More Soon</a>
+          </div>
+          <div class="mt-4 rounded-2xl border border-cyan-300/30 bg-cyan-300/10 p-4">
+            <p class="text-xs uppercase tracking-wider text-cyan-200">Live Insight</p>
+            <p class="mt-1 text-sm text-slate-100">Most users this week are buying ranked boosts + priority queue add-on.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="featured" class="py-5">
+      <div class="mx-auto w-[min(1200px,calc(100%-2rem))]">
+        <div class="mb-4 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+          <h2 class="text-3xl font-bold">Explore The Best From Our Catalog</h2>
+          <p class="text-sm text-slate-300">Best selling products this week.</p>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4" id="featured-grid"></div>
+      </div>
+    </section>
+
+    <section id="catalog" class="py-10">
+      <div class="mx-auto w-[min(1200px,calc(100%-2rem))] rounded-3xl site-card p-5 md:p-6">
+        <div class="mb-4 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+          <h2 class="text-2xl font-bold">Choose Game and Category</h2>
+          <p class="text-sm text-slate-300">Filter by game, subcategory, search and sort.</p>
+        </div>
+
+        <div class="mb-4 grid gap-3">
+          <div class="filters flex flex-wrap gap-2" id="filters" role="tablist" aria-label="Filter by game">
+            <button class="filter active rounded-full px-4 py-2 text-sm" data-filter="all" type="button">All</button>
+            <button class="filter rounded-full px-4 py-2 text-sm" data-filter="call-of-duty" type="button">Call of Duty</button>
+            <button class="filter rounded-full px-4 py-2 text-sm" data-filter="marvel-rivals" type="button">Marvel Rivals</button>
+            <button class="filter rounded-full px-4 py-2 text-sm" data-filter="battlefield" type="button">Battlefield</button>
+          </div>
+          <div class="grid gap-2">
+            <p class="text-xs text-slate-400">Subcategory</p>
+            <div class="filters subfilters flex flex-wrap gap-2" id="subfilters" role="tablist" aria-label="Filter by subcategory"></div>
+          </div>
+          <div class="grid gap-2 md:grid-cols-[2fr,1fr]">
+            <input id="search" type="search" placeholder="Search products..." class="rounded-xl border px-3 py-2" />
+            <select id="sort" class="rounded-xl border px-3 py-2">
+              <option value="featured">Sort: Featured</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+              <option value="name-asc">Name: A-Z</option>
+            </select>
+          </div>
+        </div>
+
+        <p class="mb-3 text-sm text-slate-300" id="results-count">0 products</p>
+        <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4" id="catalog-grid"></div>
+      </div>
+    </section>
+
+    <section id="boost-config" class="py-4">
+      <div class="mx-auto grid w-[min(1200px,calc(100%-2rem))] gap-4 lg:grid-cols-[1.1fr,0.9fr]">
+        <article class="site-card rounded-3xl p-5">
+          <h2 class="text-2xl font-bold">Rank Boost Configurator</h2>
+          <p class="mt-1 text-sm text-slate-300">Customize service and estimate your total instantly.</p>
+          <div class="mt-4 grid gap-3">
+            <label class="text-sm">Game<select id="cfg-game" class="mt-1 w-full rounded-xl border px-3 py-2"><option value="call-of-duty">Call of Duty</option><option value="marvel-rivals">Marvel Rivals</option><option value="battlefield">Battlefield</option></select></label>
+            <label class="text-sm">Current Rank<select id="cfg-current-rank" class="mt-1 w-full rounded-xl border px-3 py-2"><option value="0">Bronze</option><option value="1">Silver</option><option value="2">Gold</option><option value="3">Platinum</option><option value="4">Diamond</option><option value="5">Master</option><option value="6">Grandmaster</option><option value="7">Top Rank</option></select></label>
+            <label class="text-sm">Desired Rank<select id="cfg-desired-rank" class="mt-1 w-full rounded-xl border px-3 py-2"><option value="1">Silver</option><option value="2">Gold</option><option value="3">Platinum</option><option value="4">Diamond</option><option value="5">Master</option><option value="6">Grandmaster</option><option value="7">Top Rank</option></select></label>
+            <div class="space-y-2 rounded-xl border border-slate-700 bg-slate-950/60 p-3 text-sm">
+              <label class="flex items-center gap-2"><input type="checkbox" class="cfg-extra" data-multiplier="0.10" /> Request Specific Heroes (+10%)</label>
+              <label class="flex items-center gap-2"><input type="checkbox" class="cfg-extra" data-multiplier="0.25" /> XBOX/PSN (+25%)</label>
+              <label class="flex items-center gap-2"><input type="checkbox" class="cfg-extra" data-multiplier="0.30" /> Express Delivery (+30%)</label>
+              <label class="flex items-center gap-2"><input type="checkbox" class="cfg-extra" data-multiplier="1.00" /> Duo Queue (+100%)</label>
+              <label class="flex items-center gap-2"><input type="checkbox" class="cfg-extra" data-multiplier="0" /> Appear Offline (Free)</label>
+            </div>
+          </div>
+        </article>
+
+        <article class="site-card rounded-3xl p-5">
+          <p class="text-xs font-semibold uppercase tracking-wider text-cyan-300">Estimated Total</p>
+          <h3 id="cfg-total" class="mt-2 text-4xl font-extrabold">$0.00</h3>
+          <p id="cfg-note" class="mt-2 text-sm text-slate-300">Select your target rank to calculate.</p>
+          <div class="mt-5 grid gap-3">
+            <a class="accent-btn inline-flex w-fit rounded-xl px-4 py-3 text-sm" href="#catalog">Buy Now</a>
+            <button class="glass-btn w-fit rounded-xl px-4 py-3 text-sm font-bold" id="open-chat-config" type="button">Chat Before Purchase</button>
+          </div>
+          <div class="mt-5 grid gap-2 sm:grid-cols-2 text-xs text-slate-300">
+            <p class="rounded-lg border border-slate-700 p-2">No cheats or scripts</p>
+            <p class="rounded-lg border border-slate-700 p-2">Secure payments</p>
+            <p class="rounded-lg border border-slate-700 p-2">24/7 live support</p>
+            <p class="rounded-lg border border-slate-700 p-2">Progress updates</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="process" class="py-10">
+      <div class="mx-auto w-[min(1200px,calc(100%-2rem))]">
+        <div class="mb-4 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+          <h2 class="text-3xl font-bold">Easy and Effortless Purchasing Experience</h2>
+          <p class="text-sm text-slate-300">From game selection to completion.</p>
+        </div>
+        <div class="grid gap-4 md:grid-cols-4">
+          <article class="site-card rounded-2xl p-4"><p class="text-xs font-bold text-cyan-300">STEP 1</p><h3 class="mt-1 text-lg font-bold">Select Game</h3><p class="mt-2 text-slate-300">Choose your game, service and order details.</p></article>
+          <article class="site-card rounded-2xl p-4"><p class="text-xs font-bold text-cyan-300">STEP 2</p><h3 class="mt-1 text-lg font-bold">Checkout Securely</h3><p class="mt-2 text-slate-300">Pay with trusted and encrypted processors.</p></article>
+          <article class="site-card rounded-2xl p-4"><p class="text-xs font-bold text-cyan-300">STEP 3</p><h3 class="mt-1 text-lg font-bold">Order Starts</h3><p class="mt-2 text-slate-300">Our verified operators start quickly.</p></article>
+          <article class="site-card rounded-2xl p-4"><p class="text-xs font-bold text-cyan-300">STEP 4</p><h3 class="mt-1 text-lg font-bold">Success</h3><p class="mt-2 text-slate-300">Track updates and enjoy your rewards.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-5">
+      <div class="mx-auto w-[min(1200px,calc(100%-2rem))]">
+        <div class="mb-4 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+          <h2 class="text-2xl font-bold">What Our Customers Say</h2>
+          <div class="flex items-center gap-2">
+            <p class="text-sm text-slate-300">Trusted by competitive players and creators.</p>
+            <div class="flex gap-2" aria-label="Review carousel controls">
+              <button id="reviews-prev" class="glass-btn rounded-lg px-3 py-2" type="button" aria-label="Previous review">&#8249;</button>
+              <button id="reviews-next" class="glass-btn rounded-lg px-3 py-2" type="button" aria-label="Next review">&#8250;</button>
+            </div>
+          </div>
+        </div>
+        <div id="reviews-track" class="reviews-track grid auto-cols-[minmax(280px,1fr)] grid-flow-col gap-4 overflow-x-auto" aria-label="Customer testimonials">
+          <article class="review-card site-card rounded-2xl p-4"><div class="flex items-center gap-3"><div class="grid h-10 w-10 place-items-center rounded-full bg-cyan-300 text-xs font-bold text-slate-900">EM</div><div><h3 class="text-sm font-bold">Ethan Miller</h3><p class="text-xs text-cyan-300">@ethanm | COD Ranked</p></div><p class="ml-auto text-sm text-amber-300">?????</p></div><p class="mt-3 text-slate-300">Reached Crimson faster than expected. Service was discreet and communication on Discord was 10/10.</p></article>
+          <article class="review-card site-card rounded-2xl p-4"><div class="flex items-center gap-3"><div class="grid h-10 w-10 place-items-center rounded-full bg-cyan-300 text-xs font-bold text-slate-900">OR</div><div><h3 class="text-sm font-bold">Olivia Reed</h3><p class="text-xs text-cyan-300">@livplays | Marvel Rivals</p></div><p class="ml-auto text-sm text-amber-300">?????</p></div><p class="mt-3 text-slate-300">Bought a boost + instant code combo and both were delivered exactly on time. Legit team.</p></article>
+          <article class="review-card site-card rounded-2xl p-4"><div class="flex items-center gap-3"><div class="grid h-10 w-10 place-items-center rounded-full bg-cyan-300 text-xs font-bold text-slate-900">NT</div><div><h3 class="text-sm font-bold">Noah Turner</h3><p class="text-xs text-cyan-300">@noaht | Battlefield</p></div><p class="ml-auto text-sm text-amber-300">?????</p></div><p class="mt-3 text-slate-300">Clear process, safe account handling and fast support. I already booked my next rank package.</p></article>
+          <article class="review-card site-card rounded-2xl p-4"><div class="flex items-center gap-3"><div class="grid h-10 w-10 place-items-center rounded-full bg-cyan-300 text-xs font-bold text-slate-900">SK</div><div><h3 class="text-sm font-bold">Sophia King</h3><p class="text-xs text-cyan-300">@sking | Warzone</p></div><p class="ml-auto text-sm text-amber-300">?????</p></div><p class="mt-3 text-slate-300">Very professional boosters. No stress, no weird behavior, and my rank goals were fully completed.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="py-10">
+      <div class="mx-auto w-[min(1200px,calc(100%-2rem))] rounded-3xl site-card p-5 md:p-6">
+        <div class="mb-4 flex flex-col gap-2 md:flex-row md:items-end md:justify-between"><h2 class="text-2xl font-bold">FAQ</h2><p class="text-sm text-slate-300">Everything players ask before purchasing.</p></div>
+        <div class="grid gap-3">
+          <details class="rounded-xl border border-slate-700 bg-slate-950/60 p-3"><summary class="cursor-pointer font-bold">Is boosting safe?</summary><p class="mt-2 text-slate-300">Orders are handled by verified boosters with account safety guidelines and no cheat software.</p></details>
+          <details class="rounded-xl border border-slate-700 bg-slate-950/60 p-3"><summary class="cursor-pointer font-bold">How fast do you start?</summary><p class="mt-2 text-slate-300">Most orders start shortly after payment confirmation, depending on queue and selected extras.</p></details>
+          <details class="rounded-xl border border-slate-700 bg-slate-950/60 p-3"><summary class="cursor-pointer font-bold">Can I track progress?</summary><p class="mt-2 text-slate-300">Yes. You receive updates through live chat and Discord ticket communication.</p></details>
+          <details class="rounded-xl border border-slate-700 bg-slate-950/60 p-3"><summary class="cursor-pointer font-bold">Do you support PC and console?</summary><p class="mt-2 text-slate-300">We support PC and selected console orders. Use the platform extras in the configurator when needed.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-2">
+      <div class="mx-auto w-[min(1200px,calc(100%-2rem))] rounded-3xl border border-cyan-300/35 bg-cyan-300/10 p-6 text-center">
+        <h2 class="text-2xl font-bold">Are You a Professional Gamer Looking to Join?</h2>
+        <p class="mt-2 text-slate-300">Become part of our verified team and turn your skills into income.</p>
+        <a href="booster.html" class="accent-btn mt-4 inline-flex rounded-xl px-5 py-3 text-sm">Apply as Booster</a>
+      </div>
+    </section>
+  </main>
+
+  <aside class="cart-drawer fixed right-0 top-0 z-[120] grid h-screen w-full max-w-md grid-rows-[auto,1fr,auto,auto] border-l border-slate-700 bg-slate-950" id="cart-drawer" aria-hidden="true">
+    <div class="flex items-center justify-between border-b border-slate-700 p-4"><h2 class="text-xl font-bold">Your Cart</h2><button id="close-cart" class="glass-btn rounded-lg px-3 py-2" type="button">Close</button></div>
+    <div id="cart-items" class="grid gap-3 overflow-auto p-4"></div>
+    <div class="grid gap-2 border-y border-slate-700 p-4 text-sm"><div class="flex justify-between"><span>Subtotal</span><strong id="subtotal">$0.00</strong></div><div class="flex justify-between"><span>Shipping</span><strong id="shipping-cost">$0.00</strong></div><div class="flex justify-between"><span>Tax (8%)</span><strong id="tax">$0.00</strong></div><div class="flex justify-between text-base"><span>Total</span><strong id="total" class="text-cyan-300">$0.00</strong></div></div>
+    <form id="checkout-form" class="grid gap-3 p-4"><h3 class="text-lg font-bold">Checkout</h3><label class="grid gap-1 text-sm">Full Name<input id="customer-name" name="name" class="rounded-xl border px-3 py-2" required /></label><label class="grid gap-1 text-sm">Email<input id="customer-email" name="email" type="email" class="rounded-xl border px-3 py-2" required /></label><label class="grid gap-1 text-sm">Country<input id="customer-country" name="country" class="rounded-xl border px-3 py-2" required /></label><button type="submit" class="accent-btn rounded-xl px-4 py-3">Place Order</button><p id="checkout-message" class="text-sm text-rose-300"></p></form>
+  </aside>
+
+  <div id="overlay" class="fixed inset-0 z-[100] bg-black/55" hidden></div>
+  <button id="chat-toggle" class="accent-btn fixed bottom-4 right-4 z-[130] rounded-full px-5 py-3 text-sm">Live Chat</button>
+
+  <section id="chat-widget" aria-hidden="true" class="chat-widget fixed bottom-20 right-4 z-[130] grid h-[460px] w-[min(360px,calc(100%-1rem))] grid-rows-[auto,1fr,auto] overflow-hidden rounded-2xl border border-slate-700 bg-slate-900">
+    <header class="flex items-center justify-between gap-3 border-b border-slate-700 p-3"><div><h3 class="text-sm font-bold">24/7 Support</h3><p class="text-xs text-slate-400">Average reply: under 1 min</p></div><button id="chat-close" class="glass-btn rounded-lg px-3 py-2" type="button">Close</button></header>
+    <div id="chat-messages" class="grid content-start gap-2 overflow-auto p-3"></div>
+    <form id="chat-form" class="grid grid-cols-[1fr,auto] gap-2 border-t border-slate-700 p-3"><input id="chat-input" type="text" placeholder="Type your message..." maxlength="280" class="rounded-lg border px-3 py-2" required /><button type="submit" class="accent-btn rounded-lg px-4 py-2 text-sm">Send</button></form>
+  </section>
+
+  <footer class="mt-10 border-t border-slate-700 bg-slate-950/70 py-8">
+    <div class="mx-auto grid w-[min(1200px,calc(100%-2rem))] gap-6 md:grid-cols-4">
+      <div>
+        <p class="font-oxanium text-lg font-extrabold tracking-wider">THE COD <span class="text-cyan-300">STORE</span></p>
+        <p class="mt-2 text-sm text-slate-300">Independent provider of gaming services for competitive players.</p>
+      </div>
+      <div>
+        <h3 class="text-sm font-bold">Company</h3>
+        <div class="mt-2 grid gap-1 text-sm text-slate-300">
+          <a href="#featured">Catalog</a>
+          <a href="booster.html">Work with us</a>
+          <a href="my-orders.html">My Orders</a>
+        </div>
+      </div>
+      <div>
+        <h3 class="text-sm font-bold">Legal</h3>
+        <div class="mt-2 grid gap-1 text-sm text-slate-300">
+          <p>Terms and Conditions</p>
+          <p>Refund Policy</p>
+          <p>Privacy Policy</p>
+        </div>
+      </div>
+      <div>
+        <h3 class="text-sm font-bold">Support</h3>
+        <p class="mt-2 text-sm text-slate-300">support@thecodstore.gg</p>
+        <p class="text-sm text-slate-300">24/7 ticket support</p>
+      </div>
+    </div>
+    <p class="mx-auto mt-6 w-[min(1200px,calc(100%-2rem))] text-xs text-slate-500">© 2026 The Cod Store</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

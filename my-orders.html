@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Cod Store | My Orders</title>
+  <meta name="description" content="View your order history in The Cod Store." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="theme.css" rel="stylesheet" />
+  <style>
+    body { font-family: 'Space Grotesk', sans-serif; }
+    .font-orbitron { font-family: 'Orbitron', sans-serif; }
+    .bg-grid {
+      position: fixed; inset: 0; z-index: -1;
+      background-image: linear-gradient(rgba(56,189,248,.1) 1px,transparent 1px),linear-gradient(90deg,rgba(56,189,248,.1) 1px,transparent 1px);
+      background-size: 26px 26px;
+      mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100">
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <header class="sticky top-0 z-50 border-b border-slate-700/60 bg-slate-950/70 backdrop-blur">
+    <div class="mx-auto flex min-h-[72px] w-[min(1140px,calc(100%-2rem))] items-center justify-between gap-4">
+      <a href="index.html" class="font-orbitron text-sm font-extrabold tracking-wide md:text-base">THE COD <span class="text-cyan-400">STORE</span></a>
+      <div class="flex items-center gap-2">
+        <span id="auth-status" class="hidden text-xs text-slate-300 md:inline"></span>
+        <a href="login.html" id="auth-link" class="rounded-full border border-slate-600 bg-slate-900 px-3 py-2 text-xs font-bold text-slate-100">Login</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="py-10">
+    <section class="mx-auto w-[min(1140px,calc(100%-2rem))]">
+      <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h1 class="text-2xl font-bold">My Orders</h1>
+          <p id="orders-hint" class="text-sm text-slate-300">Checking your session...</p>
+        </div>
+        <div class="flex gap-2">
+          <button id="refresh-orders" type="button" class="rounded-xl border border-slate-600 px-4 py-2 text-sm font-bold">Refresh</button>
+          <a href="index.html" class="rounded-xl bg-cyan-400 px-4 py-2 text-sm font-bold text-slate-950">Back to Store</a>
+        </div>
+      </div>
+      <div id="orders-list" class="grid gap-4"></div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-client.js"></script>
+  <script src="my-orders.js"></script>
+</body>
+</html>
+
