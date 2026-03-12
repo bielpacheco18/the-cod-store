@@ -252,7 +252,7 @@ values
   (304, 'call-of-duty', 'promo-codes', 'BO7 Double XP Codes', 57.50, true, 234, 'BO7', '/img/double-xp-codes.png', 'Account and weapon 2XP codes with instant redeem delivery and low-cost access.'),
   (305, 'call-of-duty', 'promo-codes', 'BO7 Monster Energy Codes', 52.26, true, 242, 'BO7', '/img/monster-energy-codes.png', 'Unlock exclusive DLC rewards for all regions and platforms with instant fulfillment.'),
   (306, 'call-of-duty', 'camo-unlock', 'Singularity Camo Unlock', 130.74, true, 255, 'BO7', '/img/singularity-camo-unclock.png', 'Legitimate BO7 Singularity camo hard unlock with ultra-fast and smooth delivery.'),
-  (307, 'call-of-duty', 'rank-boost', 'BO7 Rank Boosting', 36.57, true, 196, 'BO7', '/img/bo7-bot-lobbies.png', 'Achieve any rank fast, unlock seasonal rewards and climb across all major game modes.'),
+  (307, 'call-of-duty', 'rank-boost', 'BO7 Rank Boosting', 36.57, true, 196, 'BO7', '/img/rank-boosting.png', 'Achieve any rank fast, unlock seasonal rewards and climb across all major game modes.'),
   (308, 'call-of-duty', 'accounts', 'BO7 Accounts For Sale', 104.58, true, 266, 'BO7', '/img/accounts-fors-sale.png', 'Accounts with Nexus Horizon camo and more, prepared for safe and instant delivery.'),
   (309, 'call-of-duty', 'camo-unlock', 'Infestation Camo Unlock', 261.53, false, 288, 'BO7', '/img/bo7-bot-lobbies.png', 'Zombies Infestation camo hard unlock with legitimate progression and ultra-fast delivery.'),
   (310, 'call-of-duty', 'camo-unlock', 'Apocalypse Camo Unlock', 261.53, false, 300, 'BO7', '/img/bo7-bot-lobbies.png', 'BO7 and Warzone Apocalypse camo unlock with clean, legitimate completion.'),

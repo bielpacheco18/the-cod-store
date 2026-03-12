@@ -79,8 +79,6 @@ function HomePage({ products, productsLoading, onAddToCart, onOpenChat }) {
     offline: false
   });
 
-  const featured = useMemo(() => products.filter((product) => product.featured).slice(0, 8), [products]);
-
   const subcategoryOptions = useMemo(() => {
     const source = filter === 'all' ? products : products.filter((item) => item.game === filter);
     return [...new Set(source.map((item) => item.subcategory))];
@@ -193,19 +191,6 @@ function HomePage({ products, productsLoading, onAddToCart, onOpenChat }) {
             </ul>
             <p>Priority queues are active this week.</p>
           </aside>
-        </div>
-      </section>
-
-      <section className="container section">
-        <div className="section-head">
-          <h2>Featured Services</h2>
-          <p>Top-selling offers this week.</p>
-        </div>
-        <div className="product-grid">
-          {productsLoading ? <p className="hint-text">Loading products...</p> : null}
-          {!productsLoading && featured.map((product) => (
-            <ProductCard key={product.id} product={product} onAddToCart={onAddToCart} />
-          ))}
         </div>
       </section>
 

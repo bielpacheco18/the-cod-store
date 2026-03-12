@@ -81,7 +81,7 @@ export const fallbackProducts = [
     featured: true,
     currency: 'USD',
     code: 'BO7',
-    image: '/img/bo7-bot-lobbies.png'
+    image: '/img/rank-boosting.png'
   },
   {
     id: 308,
