@@ -105,7 +105,7 @@ export const fallbackProducts = [
     featured: false,
     currency: 'USD',
     code: 'BO7',
-    image: '/img/bo7-bot-lobbies.png'
+    image: '/img/infestation-camo.png'
   },
   {
     id: 310,
@@ -117,7 +117,7 @@ export const fallbackProducts = [
     featured: false,
     currency: 'USD',
     code: 'BO7',
-    image: '/img/bo7-bot-lobbies.png'
+    image: '/img/apocalypse-camo.png'
   },
   {
     id: 311,
