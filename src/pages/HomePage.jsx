@@ -108,6 +108,13 @@ function HomePage({ products, productsLoading, onAddToCart, onOpenChat }) {
     return list;
   }, [products, filter, subcategory, search, sort]);
 
+  const activeFilterCount = [
+    filter !== 'all',
+    subcategory !== 'all',
+    search.trim().length > 0,
+    sort !== 'featured'
+  ].filter(Boolean).length;
+
   const boostEstimate = useMemo(() => {
     if (cfgDesiredRank <= cfgCurrentRank) {
       return { total: '$0.00', note: 'Desired rank must be higher than current rank.' };
@@ -195,55 +202,100 @@ function HomePage({ products, productsLoading, onAddToCart, onOpenChat }) {
       </section>
 
       <section id="catalog" className="container section catalog-wrap">
-        <div className="section-head">
-          <h2>Catalog</h2>
-          <p>Filter by game, subcategory, search and sort.</p>
+        <div className="section-head catalog-head">
+          <div>
+            <p className="badge">LIVE STORE CATALOG</p>
+            <h2>Pick Your Service Fast</h2>
+            <p>Browse by game, narrow by service type, then jump straight into checkout.</p>
+          </div>
+          <div className="catalog-head-side">
+            <strong>{filtered.length}</strong>
+            <span>services visible</span>
+          </div>
         </div>
 
         <div className="catalog-controls">
-          <div className="chip-row">
-            <button className={`chip-btn ${filter === 'all' ? 'active' : ''}`} onClick={() => handleFilter('all')}>All</button>
-            <button className={`chip-btn ${filter === 'call-of-duty' ? 'active' : ''}`} onClick={() => handleFilter('call-of-duty')}>Call of Duty</button>
-            <button className={`chip-btn ${filter === 'marvel-rivals' ? 'active' : ''}`} onClick={() => handleFilter('marvel-rivals')}>Marvel Rivals</button>
-            <button className={`chip-btn ${filter === 'battlefield' ? 'active' : ''}`} onClick={() => handleFilter('battlefield')}>Battlefield</button>
-          </div>
+          <div className="catalog-toolbar">
+            <div className="catalog-filter-block">
+              <span className="catalog-label">Game</span>
+              <div className="chip-row">
+                <button className={`chip-btn ${filter === 'all' ? 'active' : ''}`} onClick={() => handleFilter('all')}>All Games</button>
+                <button className={`chip-btn ${filter === 'call-of-duty' ? 'active' : ''}`} onClick={() => handleFilter('call-of-duty')}>Call of Duty</button>
+                <button className={`chip-btn ${filter === 'marvel-rivals' ? 'active' : ''}`} onClick={() => handleFilter('marvel-rivals')}>Marvel Rivals</button>
+                <button className={`chip-btn ${filter === 'battlefield' ? 'active' : ''}`} onClick={() => handleFilter('battlefield')}>Battlefield</button>
+              </div>
+            </div>
 
-          <div className="chip-row">
-            <button className={`chip-btn ${subcategory === 'all' ? 'active' : ''}`} onClick={() => setSubcategory('all')}>All Subcategories</button>
-            {subcategoryOptions.map((sub) => (
-              <button
-                key={sub}
-                className={`chip-btn ${subcategory === sub ? 'active' : ''}`}
-                onClick={() => setSubcategory(sub)}
-              >
-                {subcategoryLabel(sub)}
-              </button>
-            ))}
-          </div>
+            <div className="catalog-filter-block">
+              <span className="catalog-label">Service Type</span>
+              <div className="chip-row">
+                <button className={`chip-btn ${subcategory === 'all' ? 'active' : ''}`} onClick={() => setSubcategory('all')}>All Services</button>
+                {subcategoryOptions.map((sub) => (
+                  <button
+                    key={sub}
+                    className={`chip-btn ${subcategory === sub ? 'active' : ''}`}
+                    onClick={() => setSubcategory(sub)}
+                  >
+                    {subcategoryLabel(sub)}
+                  </button>
+                ))}
+              </div>
+            </div>
 
-          <div className="input-row">
-            <input
-              type="search"
-              value={search}
-              onChange={(event) => setSearch(event.target.value)}
-              placeholder="Search products..."
-            />
-            <select value={sort} onChange={(event) => setSort(event.target.value)}>
-              <option value="featured">Sort: Featured</option>
-              <option value="price-asc">Price: Low to High</option>
-              <option value="price-desc">Price: High to Low</option>
-              <option value="name">Name: A-Z</option>
-            </select>
+            <div className="catalog-search-row">
+              <label className="catalog-search">
+                <span className="catalog-label">Search</span>
+                <input
+                  type="search"
+                  value={search}
+                  onChange={(event) => setSearch(event.target.value)}
+                  placeholder="Search product name, game or service..."
+                />
+              </label>
+
+              <label className="catalog-sort">
+                <span className="catalog-label">Sort</span>
+                <select value={sort} onChange={(event) => setSort(event.target.value)}>
+                  <option value="featured">Featured First</option>
+                  <option value="price-asc">Price: Low to High</option>
+                  <option value="price-desc">Price: High to Low</option>
+                  <option value="name">Name: A-Z</option>
+                </select>
+              </label>
+            </div>
           </div>
         </div>
 
-        <p className="results-count">{filtered.length} product{filtered.length === 1 ? '' : 's'}</p>
+        <div className="catalog-results-bar">
+          <p className="results-count">
+            {productsLoading ? 'Loading catalog...' : `Showing ${filtered.length} product${filtered.length === 1 ? '' : 's'}`}
+          </p>
+          <div className="catalog-results-actions">
+            <span className="catalog-results-note">
+              {activeFilterCount ? `${activeFilterCount} filter${activeFilterCount === 1 ? '' : 's'} active` : 'Featured layout active'}
+            </span>
+            {activeFilterCount ? (
+              <button
+                className="btn btn-ghost"
+                onClick={() => {
+                  setFilter('all');
+                  setSubcategory('all');
+                  setSearch('');
+                  setSort('featured');
+                }}
+              >
+                Reset Filters
+              </button>
+            ) : null}
+          </div>
+        </div>
 
         <div className="product-grid">
+          {productsLoading ? <p className="empty-box">Loading products...</p> : null}
           {filtered.map((product) => (
             <ProductCard key={product.id} product={product} onAddToCart={onAddToCart} />
           ))}
-          {!filtered.length ? <p className="empty-box">No products found for your filters.</p> : null}
+          {!productsLoading && !filtered.length ? <p className="empty-box">No products found for your filters.</p> : null}
         </div>
       </section>
 

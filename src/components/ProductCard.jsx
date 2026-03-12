@@ -4,11 +4,8 @@ function ProductCard({ product, onAddToCart }) {
   return (
     <article className="product-card">
       <div className="image-wrap">
+        <span className="product-code-badge">{product.code || 'TC'}</span>
         <img src={product.image} alt={product.title} loading="lazy" />
-        <div className="image-badge">
-          <span>{gameLabel(product.game)}</span>
-          <strong>{product.code || 'TC'}</strong>
-        </div>
       </div>
 
       <div className="card-body">
@@ -16,11 +13,15 @@ function ProductCard({ product, onAddToCart }) {
           <span>{gameLabel(product.game)}</span>
           <span>{subcategoryLabel(product.subcategory)}</span>
         </div>
-        <h3>{product.title}</h3>
-        <p>{product.description}</p>
+        <h3 className="product-title">{product.title}</h3>
+        <p className="product-meta-line">Manual service · Secure delivery</p>
+        <p className="product-description">{product.description}</p>
         <div className="card-foot">
-          <strong>{formatPrice(product.price, product.currency)}</strong>
-          <button className="btn btn-ghost" onClick={() => onAddToCart(product.id)}>Add</button>
+          <div className="price-block">
+            <span>Starting at</span>
+            <strong>{formatPrice(product.price, product.currency)}</strong>
+          </div>
+          <button className="btn btn-primary card-cta" onClick={() => onAddToCart(product.id)}>Add to Cart</button>
         </div>
       </div>
     </article>
