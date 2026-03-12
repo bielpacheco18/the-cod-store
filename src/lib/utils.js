@@ -1,5 +1,7 @@
-﻿export function formatPrice(value) {
-  return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(Number(value || 0));
+export function formatPrice(value, currency = 'USD') {
+  const normalizedCurrency = currency || 'USD';
+  const locale = normalizedCurrency === 'BRL' ? 'pt-BR' : 'en-US';
+  return new Intl.NumberFormat(locale, { style: 'currency', currency: normalizedCurrency }).format(Number(value || 0));
 }
 
 export function formatDate(value) {
@@ -27,6 +29,10 @@ export function subcategoryLabel(slug) {
   if (slug === 'special-items') return 'Special Items';
   if (slug === 'service-fee') return 'Service Fee';
   if (slug === 'prestige-leveling') return 'Prestige Leveling';
+  if (slug === 'bot-lobbies') return 'Bot Lobbies';
+  if (slug === 'cod-points') return 'COD Points';
+  if (slug === 'promo-codes') return 'Promo Codes';
+  if (slug === 'accounts') return 'Accounts';
   return slug;
 }
 

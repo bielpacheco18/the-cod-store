@@ -29,6 +29,37 @@ const reviews = [
   }
 ];
 
+const gameOptions = [
+  {
+    id: 'call-of-duty',
+    name: 'Call of Duty',
+    tagline: 'Ranked grind and camo unlocks',
+    image: 'https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1938090/capsule_616x353.jpg'
+  },
+  {
+    id: 'marvel-rivals',
+    name: 'Marvel Rivals',
+    tagline: 'High-elo hero specialists',
+    image: 'https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/2767030/capsule_616x353.jpg'
+  },
+  {
+    id: 'battlefield',
+    name: 'Battlefield',
+    tagline: 'Placement and progression queue',
+    image: 'https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1517290/capsule_616x353.jpg'
+  }
+];
+
+const rankLabels = ['Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond', 'Master', 'Grandmaster', 'Top Rank'];
+
+const extraOptions = [
+  { id: 'heroes', label: 'Specific Heroes', price: '+10%', detail: 'Pick mains and role priorities.' },
+  { id: 'console', label: 'Console Queue', price: '+25%', detail: 'Dedicated controller-ready booster.' },
+  { id: 'express', label: 'Express Delivery', price: '+30%', detail: 'Priority scheduling and shorter ETA.' },
+  { id: 'duo', label: 'Duo Queue', price: '+100%', detail: 'Play together with your booster.' },
+  { id: 'offline', label: 'Appear Offline', price: 'Free', detail: 'Low-visibility progress sessions.' }
+];
+
 function HomePage({ products, productsLoading, onAddToCart, onOpenChat }) {
   const [filter, setFilter] = useState('all');
   const [subcategory, setSubcategory] = useState('all');
@@ -115,6 +146,8 @@ function HomePage({ products, productsLoading, onAddToCart, onOpenChat }) {
   }
 
   const review = reviews[reviewIndex % reviews.length];
+  const selectedGame = gameOptions.find((game) => game.id === cfgGame) ?? gameOptions[0];
+  const rankProgress = Math.max(cfgDesiredRank - cfgCurrentRank, 0);
 
   return (
     <main>
@@ -232,58 +265,126 @@ function HomePage({ products, productsLoading, onAddToCart, onOpenChat }) {
       <section className="container section boost-section">
         <div className="boost-grid">
           <article className="boost-config">
-            <h2>Rank Boost Configurator</h2>
-            <p>Set your rank range and extras for an instant estimate.</p>
+            <div className="boost-header">
+              <div>
+                <p className="badge">LIVE CONFIGURATOR</p>
+                <h2>Modern Rank Boost Planner</h2>
+                <p>Choose your game, preview the route and build a cleaner custom order with visuals.</p>
+              </div>
+              <div className="boost-live-chip">
+                <span className="hero-online-dot" aria-hidden="true" />
+                <strong>24/7</strong>
+                <span>booster coverage</span>
+              </div>
+            </div>
 
-            <label>
-              Game
-              <select value={cfgGame} onChange={(event) => setCfgGame(event.target.value)}>
-                <option value="call-of-duty">Call of Duty</option>
-                <option value="marvel-rivals">Marvel Rivals</option>
-                <option value="battlefield">Battlefield</option>
-              </select>
-            </label>
+            <div className="game-picker" aria-label="Select game">
+              {gameOptions.map((game) => (
+                <button
+                  key={game.id}
+                  type="button"
+                  className={`game-card ${cfgGame === game.id ? 'active' : ''}`}
+                  onClick={() => setCfgGame(game.id)}
+                >
+                  <img src={game.image} alt={game.name} />
+                  <span className="game-card-overlay" aria-hidden="true" />
+                  <span className="game-card-copy">
+                    <strong>{game.name}</strong>
+                    <span>{game.tagline}</span>
+                  </span>
+                </button>
+              ))}
+            </div>
 
-            <label>
-              Current Rank
-              <select value={cfgCurrentRank} onChange={(event) => setCfgCurrentRank(Number(event.target.value))}>
-                <option value="0">Bronze</option>
-                <option value="1">Silver</option>
-                <option value="2">Gold</option>
-                <option value="3">Platinum</option>
-                <option value="4">Diamond</option>
-                <option value="5">Master</option>
-                <option value="6">Grandmaster</option>
-                <option value="7">Top Rank</option>
-              </select>
-            </label>
+            <div className="boost-rank-panel">
+              <div className="boost-rank-head">
+                <div>
+                  <p className="boost-kicker">Boost Route</p>
+                  <h3>{rankLabels[cfgCurrentRank]} to {rankLabels[cfgDesiredRank]}</h3>
+                </div>
+                <span className="boost-step-pill">{rankProgress} rank step{rankProgress === 1 ? '' : 's'}</span>
+              </div>
 
-            <label>
-              Desired Rank
-              <select value={cfgDesiredRank} onChange={(event) => setCfgDesiredRank(Number(event.target.value))}>
-                <option value="1">Silver</option>
-                <option value="2">Gold</option>
-                <option value="3">Platinum</option>
-                <option value="4">Diamond</option>
-                <option value="5">Master</option>
-                <option value="6">Grandmaster</option>
-                <option value="7">Top Rank</option>
-              </select>
-            </label>
+              <div className="boost-rank-track" aria-hidden="true">
+                {rankLabels.map((rank, index) => (
+                  <span
+                    key={rank}
+                    className={[
+                      'rank-node',
+                      index === cfgCurrentRank ? 'current' : '',
+                      index === cfgDesiredRank ? 'target' : '',
+                      index > cfgCurrentRank && index < cfgDesiredRank ? 'path' : ''
+                    ].filter(Boolean).join(' ')}
+                  >
+                    {rank.slice(0, 1)}
+                  </span>
+                ))}
+              </div>
 
-            <div className="checkboxes">
-              <label><input type="checkbox" checked={cfgExtras.heroes} onChange={(e) => setCfgExtras((prev) => ({ ...prev, heroes: e.target.checked }))} /> Request Specific Heroes (+10%)</label>
-              <label><input type="checkbox" checked={cfgExtras.console} onChange={(e) => setCfgExtras((prev) => ({ ...prev, console: e.target.checked }))} /> Console Queue (+25%)</label>
-              <label><input type="checkbox" checked={cfgExtras.express} onChange={(e) => setCfgExtras((prev) => ({ ...prev, express: e.target.checked }))} /> Express Delivery (+30%)</label>
-              <label><input type="checkbox" checked={cfgExtras.duo} onChange={(e) => setCfgExtras((prev) => ({ ...prev, duo: e.target.checked }))} /> Duo Queue (+100%)</label>
-              <label><input type="checkbox" checked={cfgExtras.offline} onChange={(e) => setCfgExtras((prev) => ({ ...prev, offline: e.target.checked }))} /> Appear Offline (Free)</label>
+              <div className="boost-form-grid">
+                <label>
+                  Current Rank
+                  <select value={cfgCurrentRank} onChange={(event) => setCfgCurrentRank(Number(event.target.value))}>
+                    {rankLabels.map((rank, index) => (
+                      <option key={rank} value={index}>{rank}</option>
+                    ))}
+                  </select>
+                </label>
+
+                <label>
+                  Desired Rank
+                  <select value={cfgDesiredRank} onChange={(event) => setCfgDesiredRank(Number(event.target.value))}>
+                    {rankLabels.slice(1).map((rank, offset) => (
+                      <option key={rank} value={offset + 1}>{rank}</option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+            </div>
+
+            <div className="boost-extras">
+              {extraOptions.map((extra) => (
+                <label key={extra.id} className={`extra-card ${cfgExtras[extra.id] ? 'active' : ''}`}>
+                  <input
+                    type="checkbox"
+                    checked={cfgExtras[extra.id]}
+                    onChange={(e) => setCfgExtras((prev) => ({ ...prev, [extra.id]: e.target.checked }))}
+                  />
+                  <div>
+                    <div className="extra-card-top">
+                      <strong>{extra.label}</strong>
+                      <span>{extra.price}</span>
+                    </div>
+                    <p>{extra.detail}</p>
+                  </div>
+                </label>
+              ))}
             </div>
           </article>
 
           <article className="boost-summary">
-            <p>Estimated Total</p>
-            <h3>{boostEstimate.total}</h3>
-            <p>{boostEstimate.note}</p>
+            <div className="boost-summary-media">
+              <img src={selectedGame.image} alt={selectedGame.name} />
+              <div className="boost-summary-overlay" aria-hidden="true" />
+              <div className="boost-summary-copy">
+                <p>{selectedGame.name}</p>
+                <h3>{boostEstimate.total}</h3>
+                <span>{boostEstimate.note}</span>
+              </div>
+            </div>
+            <div className="boost-summary-stats">
+              <div><strong>{rankProgress}</strong><span>rank steps</span></div>
+              <div><strong>~72h</strong><span>delivery target</span></div>
+              <div><strong>Manual</strong><span>no botting</span></div>
+            </div>
+            <div className="boost-summary-list">
+              <p>Included with this plan</p>
+              <ul>
+                <li>Private order tracking and live chat updates</li>
+                <li>Game-specific boosters for {selectedGame.name}</li>
+                <li>Flexible extras based on your queue preference</li>
+              </ul>
+            </div>
             <div className="hero-actions">
               <a className="btn btn-primary" href="#catalog">Buy Now</a>
               <button className="btn btn-ghost" onClick={onOpenChat}>Chat Before Purchase</button>

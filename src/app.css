@@ -499,6 +499,208 @@ input:focus, select:focus, textarea:focus {
   grid-template-columns: 1.1fr 0.9fr;
 }
 
+.boost-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.boost-header h2 {
+  margin: 8px 0 0;
+  font-family: 'Oxanium', sans-serif;
+}
+
+.boost-header p:last-child {
+  margin: 8px 0 0;
+  color: var(--text-1);
+}
+
+.boost-live-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(132, 161, 212, 0.25);
+  background: rgba(7, 13, 27, 0.82);
+  white-space: nowrap;
+}
+
+.game-picker {
+  margin-top: 18px;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.game-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 184px;
+  padding: 0;
+  border-radius: 18px;
+  border: 1px solid rgba(132, 161, 212, 0.18);
+  background: rgba(8, 14, 29, 0.75);
+  cursor: pointer;
+  text-align: left;
+}
+
+.game-card img,
+.boost-summary-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.game-card-overlay,
+.boost-summary-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(4, 9, 19, 0.08), rgba(4, 9, 19, 0.9));
+}
+
+.game-card-copy {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 1;
+  display: grid;
+  gap: 4px;
+  padding: 14px;
+}
+
+.game-card-copy strong,
+.boost-summary-copy h3,
+.boost-rank-head h3 {
+  font-family: 'Oxanium', sans-serif;
+}
+
+.game-card-copy span {
+  color: rgba(233, 241, 255, 0.72);
+  font-size: 0.9rem;
+}
+
+.game-card.active {
+  transform: translateY(-2px);
+  border-color: rgba(106, 245, 201, 0.52);
+  box-shadow: 0 18px 36px rgba(8, 20, 45, 0.35);
+}
+
+.boost-rank-panel {
+  margin-top: 16px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(14, 24, 46, 0.9), rgba(8, 14, 29, 0.8));
+}
+
+.boost-rank-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.boost-kicker {
+  margin: 0;
+  color: #8aeaff;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.74rem;
+}
+
+.boost-step-pill {
+  padding: 8px 10px;
+  border-radius: 999px;
+  background: rgba(86, 231, 255, 0.12);
+  border: 1px solid rgba(86, 231, 255, 0.24);
+  font-size: 0.84rem;
+}
+
+.boost-rank-track {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.rank-node {
+  height: 38px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-1);
+  border: 1px solid rgba(132, 161, 212, 0.18);
+  background: rgba(8, 14, 28, 0.8);
+}
+
+.rank-node.current,
+.rank-node.target {
+  color: #031321;
+  border-color: transparent;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+}
+
+.rank-node.path {
+  color: var(--text-0);
+  border-color: rgba(86, 231, 255, 0.28);
+  background: rgba(17, 34, 64, 0.95);
+}
+
+.boost-form-grid {
+  margin-top: 16px;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.boost-extras {
+  margin-top: 16px;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.extra-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  align-items: start;
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(132, 161, 212, 0.16);
+  background: rgba(8, 14, 28, 0.72);
+  cursor: pointer;
+}
+
+.extra-card input {
+  width: auto;
+  margin-top: 3px;
+}
+
+.extra-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.extra-card p {
+  margin: 6px 0 0;
+  color: var(--text-1);
+  font-size: 0.88rem;
+}
+
+.extra-card.active {
+  border-color: rgba(106, 245, 201, 0.4);
+  background: linear-gradient(180deg, rgba(15, 33, 43, 0.96), rgba(9, 18, 30, 0.92));
+  box-shadow: inset 0 0 0 1px rgba(106, 245, 201, 0.08);
+}
+
 .boost-config label,
 .checkout-form label,
 .auth-card label,
@@ -537,6 +739,75 @@ input:focus, select:focus, textarea:focus {
   margin: 8px 0;
   font-family: 'Oxanium', sans-serif;
   font-size: 2.4rem;
+}
+
+.boost-summary-media {
+  position: relative;
+  overflow: hidden;
+  min-height: 260px;
+  border-radius: 20px;
+  border: 1px solid rgba(132, 161, 212, 0.18);
+}
+
+.boost-summary-copy {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 1;
+  padding: 18px;
+}
+
+.boost-summary-copy p {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.73rem;
+  color: #8aeaff;
+}
+
+.boost-summary-copy span {
+  color: rgba(233, 241, 255, 0.78);
+}
+
+.boost-summary-stats {
+  margin-top: 14px;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.boost-summary-stats div {
+  padding: 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(132, 161, 212, 0.16);
+  background: rgba(8, 14, 28, 0.72);
+}
+
+.boost-summary-stats strong {
+  display: block;
+  font-family: 'Oxanium', sans-serif;
+  font-size: 1.04rem;
+}
+
+.boost-summary-stats span {
+  color: var(--text-1);
+  font-size: 0.84rem;
+}
+
+.boost-summary-list {
+  margin-top: 16px;
+}
+
+.boost-summary-list p {
+  margin: 0 0 8px;
+}
+
+.boost-summary-list ul {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 8px;
+  color: var(--text-1);
 }
 
 .review-nav {
@@ -922,6 +1193,97 @@ input:focus, select:focus, textarea:focus {
   grid-template-columns: 1fr 1fr;
 }
 
+.custom-order-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: 1.1fr 0.9fr;
+}
+
+.custom-order-copy,
+.custom-order-panel,
+.contact-card {
+  background: linear-gradient(165deg, rgba(14, 24, 46, 0.84), var(--card));
+  border: 1px solid var(--line);
+  box-shadow: 0 16px 40px rgba(2, 7, 18, 0.45);
+  border-radius: 24px;
+}
+
+.custom-order-copy,
+.custom-order-panel {
+  padding: 20px;
+}
+
+.custom-order-copy h1,
+.custom-order-panel h2 {
+  margin: 10px 0 0;
+  font-family: 'Oxanium', sans-serif;
+}
+
+.custom-order-copy > p:last-of-type,
+.custom-order-panel > p {
+  color: var(--text-1);
+}
+
+.custom-order-points {
+  margin-top: 18px;
+  display: grid;
+  gap: 10px;
+}
+
+.custom-order-points div {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  align-items: start;
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(132, 161, 212, 0.16);
+  background: rgba(8, 14, 28, 0.72);
+}
+
+.custom-order-points strong {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  color: #031321;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+}
+
+.contact-card-grid {
+  margin-top: 16px;
+  display: grid;
+  gap: 10px;
+}
+
+.contact-card {
+  padding: 16px;
+  display: grid;
+  gap: 4px;
+}
+
+.contact-card strong {
+  font-family: 'Oxanium', sans-serif;
+}
+
+.contact-card span,
+.custom-order-note p {
+  color: var(--text-1);
+}
+
+.contact-card:hover {
+  border-color: var(--line-strong);
+}
+
+.custom-order-note {
+  margin-top: 16px;
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px dashed rgba(132, 161, 212, 0.28);
+  background: rgba(8, 14, 28, 0.46);
+}
+
 .booster-copy ul {
   margin: 12px 0 0;
   padding-left: 17px;
@@ -941,7 +1303,13 @@ input:focus, select:focus, textarea:focus {
 
   .hero-grid,
   .boost-grid,
-  .booster-grid {
+  .booster-grid,
+  .custom-order-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .game-picker,
+  .boost-extras {
     grid-template-columns: 1fr;
   }
 
@@ -968,10 +1336,26 @@ input:focus, select:focus, textarea:focus {
     grid-template-columns: 1fr;
   }
 
+  .boost-header,
+  .boost-rank-head,
+  .boost-form-grid,
+  .boost-summary-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .boost-header,
+  .boost-rank-head {
+    display: grid;
+  }
+
   .hero-stats,
   .footer-grid,
   .product-grid {
     grid-template-columns: 1fr;
+  }
+
+  .boost-rank-track {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .hero-trustbar {

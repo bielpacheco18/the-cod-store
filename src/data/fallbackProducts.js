@@ -1,39 +1,138 @@
-﻿export const fallbackProducts = [
+export const fallbackProducts = [
   {
     id: 301,
     game: 'call-of-duty',
-    subcategory: 'rank-boost',
-    title: 'COD Rank Boost - Basic',
-    description: 'Entry-level ranked progression for solo queue players.',
-    price: 99,
+    subcategory: 'bot-lobbies',
+    title: 'BO7 Bot Lobbies',
+    description: 'Rapidly unlock camos and level up with 250-400+ kills per game and a safe progression flow.',
+    price: 41.8,
     featured: true,
-    code: 'CO',
-    image: 'https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1938090/capsule_616x353.jpg'
+    currency: 'USD',
+    code: 'BO7',
+    image: '/img/bo7-bot-lobbies.png'
   },
   {
     id: 302,
     game: 'call-of-duty',
-    subcategory: 'camo-unlock',
-    title: 'COD Camo Unlock - Standard',
-    description: 'Fast camo unlock support with progress updates.',
-    price: 149,
+    subcategory: 'cod-points',
+    title: 'Cheap COD Points',
+    description: 'Get up to 21,600 COD Points with secure delivery for new bundles, passes and store drops.',
+    price: 73.19,
     featured: true,
-    code: 'CO',
-    image: 'https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1938090/capsule_616x353.jpg'
+    currency: 'USD',
+    code: 'BO7',
+    image: '/img/cheap-cod-points.png'
   },
   {
     id: 303,
     game: 'call-of-duty',
-    subcategory: 'prestige-leveling',
-    title: 'COD Prestige Leveling - Advanced',
-    description: 'High-volume leveling package for competitive profiles.',
-    price: 249,
-    featured: false,
-    code: 'CO',
-    image: 'https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1938090/capsule_616x353.jpg'
+    subcategory: 'promo-codes',
+    title: 'BO7 Muller Milk Codes',
+    description: 'Mullermilch bundle codes for all regions and platforms with instant delivery.',
+    price: 41.8,
+    featured: true,
+    currency: 'USD',
+    code: 'BO7',
+    image: '/img/muller-milk-codes.png'
+  },
+  {
+    id: 304,
+    game: 'call-of-duty',
+    subcategory: 'promo-codes',
+    title: 'BO7 Double XP Codes',
+    description: 'Account and weapon 2XP codes with instant redeem delivery and low-cost access.',
+    price: 57.5,
+    featured: true,
+    currency: 'USD',
+    code: 'BO7',
+    image: '/img/double-xp-codes.png'
   },
   {
     id: 305,
+    game: 'call-of-duty',
+    subcategory: 'promo-codes',
+    title: 'BO7 Monster Energy Codes',
+    description: 'Unlock exclusive DLC rewards for all regions and platforms with instant fulfillment.',
+    price: 52.26,
+    featured: true,
+    currency: 'USD',
+    code: 'BO7',
+    image: '/img/monster-energy-codes.png'
+  },
+  {
+    id: 306,
+    game: 'call-of-duty',
+    subcategory: 'camo-unlock',
+    title: 'Singularity Camo Unlock',
+    description: 'Legitimate BO7 Singularity camo hard unlock with ultra-fast and smooth delivery.',
+    price: 130.74,
+    featured: true,
+    currency: 'USD',
+    code: 'BO7',
+    image: '/img/singularity-camo-unclock.png'
+  },
+  {
+    id: 307,
+    game: 'call-of-duty',
+    subcategory: 'rank-boost',
+    title: 'BO7 Rank Boosting',
+    description: 'Achieve any rank fast, unlock seasonal rewards and climb across all major game modes.',
+    price: 36.57,
+    featured: true,
+    currency: 'USD',
+    code: 'BO7',
+    image: '/img/bo7-bot-lobbies.png'
+  },
+  {
+    id: 308,
+    game: 'call-of-duty',
+    subcategory: 'accounts',
+    title: 'BO7 Accounts For Sale',
+    description: 'Accounts with Nexus Horizon camo and more, prepared for safe and instant delivery.',
+    price: 104.58,
+    featured: true,
+    currency: 'USD',
+    code: 'BO7',
+    image: '/img/accounts-fors-sale.png'
+  },
+  {
+    id: 309,
+    game: 'call-of-duty',
+    subcategory: 'camo-unlock',
+    title: 'Infestation Camo Unlock',
+    description: 'Zombies Infestation camo hard unlock with legitimate progression and ultra-fast delivery.',
+    price: 261.53,
+    featured: false,
+    currency: 'USD',
+    code: 'BO7',
+    image: '/img/bo7-bot-lobbies.png'
+  },
+  {
+    id: 310,
+    game: 'call-of-duty',
+    subcategory: 'camo-unlock',
+    title: 'Apocalypse Camo Unlock',
+    description: 'BO7 and Warzone Apocalypse camo unlock with clean, legitimate completion.',
+    price: 261.53,
+    featured: false,
+    currency: 'USD',
+    code: 'BO7',
+    image: '/img/bo7-bot-lobbies.png'
+  },
+  {
+    id: 311,
+    game: 'call-of-duty',
+    subcategory: 'camo-unlock',
+    title: 'Nexus Horizon Camo',
+    description: 'Unlock all mastery camos and secret universal rewards with safe, fast delivery.',
+    price: 3138.97,
+    featured: false,
+    currency: 'USD',
+    code: 'BO7',
+    image: '/img/bo7-bot-lobbies.png'
+  },
+  {
+    id: 401,
     game: 'marvel-rivals',
     subcategory: 'rank-boost',
     title: 'Marvel Rivals Rank Boost - Basic',
@@ -44,7 +143,7 @@
     image: 'https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/2767030/capsule_616x353.jpg'
   },
   {
-    id: 306,
+    id: 402,
     game: 'marvel-rivals',
     subcategory: 'rank-boost',
     title: 'Marvel Rivals Rank Boost - Pro',
@@ -55,7 +154,7 @@
     image: 'https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/2767030/capsule_616x353.jpg'
   },
   {
-    id: 307,
+    id: 403,
     game: 'marvel-rivals',
     subcategory: 'camo-unlock',
     title: 'Marvel Rivals Skin Unlock Service',
@@ -66,7 +165,7 @@
     image: 'https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/2767030/capsule_616x353.jpg'
   },
   {
-    id: 309,
+    id: 501,
     game: 'battlefield',
     subcategory: 'rank-boost',
     title: 'Battlefield Rank Boost - Standard',
@@ -77,7 +176,7 @@
     image: 'https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1517290/capsule_616x353.jpg'
   },
   {
-    id: 310,
+    id: 502,
     game: 'battlefield',
     subcategory: 'rank-boost',
     title: 'Battlefield Placement Matches Service',
@@ -88,7 +187,7 @@
     image: 'https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1517290/capsule_616x353.jpg'
   },
   {
-    id: 311,
+    id: 503,
     game: 'battlefield',
     subcategory: 'special-items',
     title: 'Battlefield Challenge Completion Pack',
@@ -99,7 +198,7 @@
     image: 'https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1517290/capsule_616x353.jpg'
   },
   {
-    id: 312,
+    id: 504,
     game: 'battlefield',
     subcategory: 'service-fee',
     title: 'Priority Queue Add-on',

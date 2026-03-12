@@ -9,8 +9,15 @@ import AuthPage from './pages/AuthPage.jsx';
 import OrdersPage from './pages/OrdersPage.jsx';
 import BoosterPage from './pages/BoosterPage.jsx';
 import ProfilePage from './pages/ProfilePage.jsx';
+import CustomOrderPage from './pages/CustomOrderPage.jsx';
 import { fallbackProducts } from './data/fallbackProducts.js';
 import { supabase, hasSupabaseConfig } from './lib/supabase.js';
+
+function mergeCatalogWithLocalOverrides(productsFromDb) {
+  const localGames = new Set(fallbackProducts.map((product) => product.game));
+  const preservedRemoteProducts = productsFromDb.filter((product) => !localGames.has(product.game));
+  return [...fallbackProducts, ...preservedRemoteProducts];
+}
 
 function botReplyFor(text) {
   const value = text.toLowerCase();
@@ -72,7 +79,7 @@ function App() {
       if (error || !Array.isArray(data) || !data.length) {
         setProducts(fallbackProducts);
       } else {
-        setProducts(data);
+        setProducts(mergeCatalogWithLocalOverrides(data));
       }
       setProductsLoading(false);
     }
@@ -417,6 +424,10 @@ function App() {
         <Route
           path="/orders"
           element={<OrdersPage user={user} />}
+        />
+        <Route
+          path="/custom-order"
+          element={<CustomOrderPage />}
         />
         <Route
           path="/profile"

@@ -17,6 +17,7 @@ function Header({ user, cartCount, onOpenCart, onSignOut }) {
 
         <nav className="main-nav" aria-label="Primary">
           <NavLink to="/">Store</NavLink>
+          <NavLink to="/custom-order">Custom Order</NavLink>
           <NavLink to="/orders">My Orders</NavLink>
           <NavLink to="/booster">Join as Booster</NavLink>
         </nav>

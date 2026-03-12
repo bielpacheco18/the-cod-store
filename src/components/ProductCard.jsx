@@ -1,4 +1,4 @@
-﻿import { formatPrice, gameLabel, subcategoryLabel } from '../lib/utils.js';
+import { formatPrice, gameLabel, subcategoryLabel } from '../lib/utils.js';
 
 function ProductCard({ product, onAddToCart }) {
   return (
@@ -19,7 +19,7 @@ function ProductCard({ product, onAddToCart }) {
         <h3>{product.title}</h3>
         <p>{product.description}</p>
         <div className="card-foot">
-          <strong>{formatPrice(product.price)}</strong>
+          <strong>{formatPrice(product.price, product.currency)}</strong>
           <button className="btn btn-ghost" onClick={() => onAddToCart(product.id)}>Add</button>
         </div>
       </div>

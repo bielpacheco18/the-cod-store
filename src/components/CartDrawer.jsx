@@ -1,4 +1,4 @@
-﻿import { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { cartTotals, formatPrice } from '../lib/utils.js';
 
 function CartDrawer({ open, onClose, items, onChangeQty, onCheckout, checkoutMessage, checkoutLoading, user }) {
@@ -9,6 +9,8 @@ function CartDrawer({ open, onClose, items, onChangeQty, onCheckout, checkoutMes
   const totals = useMemo(() => {
     return cartTotals(items.map((item) => ({ price: item.product.price, quantity: item.quantity })));
   }, [items]);
+
+  const cartCurrency = items[0]?.product?.currency || 'USD';
 
   function submit(event) {
     event.preventDefault();
@@ -31,23 +33,23 @@ function CartDrawer({ open, onClose, items, onChangeQty, onCheckout, checkoutMes
               <img src={item.product.image} alt={item.product.title} loading="lazy" />
               <div>
                 <h3>{item.product.title}</h3>
-                <p>{formatPrice(item.product.price)}</p>
+                <p>{formatPrice(item.product.price, item.product.currency)}</p>
                 <div className="qty-controls">
                   <button onClick={() => onChangeQty(item.product_id, -1)}>-</button>
                   <span>{item.quantity}</span>
                   <button onClick={() => onChangeQty(item.product_id, 1)}>+</button>
                 </div>
               </div>
-              <strong>{formatPrice(item.product.price * item.quantity)}</strong>
+              <strong>{formatPrice(item.product.price * item.quantity, item.product.currency)}</strong>
             </article>
           ))}
         </div>
 
         <div className="drawer-totals">
-          <p><span>Subtotal</span><strong>{formatPrice(totals.subtotal)}</strong></p>
-          <p><span>Shipping</span><strong>{formatPrice(totals.shipping)}</strong></p>
-          <p><span>Tax (8%)</span><strong>{formatPrice(totals.tax)}</strong></p>
-          <p className="total-row"><span>Total</span><strong>{formatPrice(totals.total)}</strong></p>
+          <p><span>Subtotal</span><strong>{formatPrice(totals.subtotal, cartCurrency)}</strong></p>
+          <p><span>Shipping</span><strong>{formatPrice(totals.shipping, cartCurrency)}</strong></p>
+          <p><span>Tax (8%)</span><strong>{formatPrice(totals.tax, cartCurrency)}</strong></p>
+          <p className="total-row"><span>Total</span><strong>{formatPrice(totals.total, cartCurrency)}</strong></p>
         </div>
 
         <form className="checkout-form" onSubmit={submit}>
